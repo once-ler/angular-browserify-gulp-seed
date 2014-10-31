@@ -1,0 +1,27 @@
+{
+  "name": "angular-browserify-gulp-seed",
+  "version": "0.0.0",
+  "homepage": "https://github.com/htaox/angular-browserify-gulp-seed",
+  "authors": [
+    "Henry Tao <htaox@hotmail.com>"
+  ],
+  "description": "Finally, a boilerplate I'm going to use.",
+  "main": "app.js",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~1.11.1",
+    "angular": "~1.2.21",
+    "angular-ui-router": "~0.2.10",
+    "metro-bootstrap": "*"
+  }
+}
