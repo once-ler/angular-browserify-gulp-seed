@@ -1,0 +1,9 @@
+*.sw*
+*~
+build/
+bin/
+node_modules/
+vendor/
+public/src/vendor/
+.idea/
+npm-debug.log
