@@ -5,5 +5,7 @@ bin/
 node_modules/
 vendor/
 public/src/vendor/
+public/dist/
+public/images/
 .idea/
 npm-debug.log

@@ -5,6 +5,7 @@
 require('angular');
 require('angular-ui-router');
 
+require('./templates');
 var testModule = require('./hello');
 var todosModule = require('./todos');
 
@@ -13,6 +14,7 @@ angular.element(document).ready(function() {
 
   var requires = [
     'ui.router',
+    'templates',
     testModule.name,
     todosModule.name
   ];
@@ -29,7 +31,7 @@ angular.element(document).ready(function() {
   angular.bootstrap(document, ['app']);
 
 });
-},{"./hello":"C:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\index.js","./routes":"C:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js","./todos":"C:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\index.js","angular":"angular","angular-ui-router":"angular-ui-router"}],"C:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\node_modules\\browserify\\lib\\_empty.js":[function(require,module,exports){
+},{"./hello":"C:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\index.js","./routes":"C:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js","./templates":"C:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\templates.js","./todos":"C:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\index.js","angular":"angular","angular-ui-router":"angular-ui-router"}],"C:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\node_modules\\browserify\\lib\\_empty.js":[function(require,module,exports){
 
 },{}],"C:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\node_modules\\lodash\\dist\\lodash.js":[function(require,module,exports){
 (function (global){
@@ -6929,6 +6931,10 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider) {
 Routes.$inject = ["$stateProvider", "$locationProvider", "$urlRouterProvider"];
 
 module.exports = Routes;
+},{}],"C:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\templates.js":[function(require,module,exports){
+angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("hello/partials/home.html","<h1>Hello World! <span ng-if=\"greetings\">{{ greetings }}</span></h1>\n<p>Refresh page to see <code>MyApp.controllers.HomeController</code> in action!</p>\n\n");
+$templateCache.put("todos/partials/imprint.html","<div>\n  {{ text }}\n</div>\n\n<p>\n\n<a href=\"#/todos\">Shut up and take me to the todo list!</a>\n");
+$templateCache.put("todos/partials/todos.html","<div class=\"grid-20 grid-parent\">\n  <div class=\"margins rounded-box text-on-blue\">\n    <div class=\"sidebar-heading sidebar-heading-skin dark-blue-bg\">Your Todos</div>\n    <div ng-controller=\"TodoListCtrl\">\n      <a ng-repeat=\"todo in getTodos()\"\n        ng-click=\"select(todo)\"\n        class=\"sidebar-item-borders sidebar-item dark-blue-bg\"\n        ng-class=\"getCssClass(todo)\"\n      >\n        <span ng-bind=\"todo.title\"></span>\n      </a>\n    </div>\n  </div>\n</div>\n\n<div ng-controller=\"EditTodoCtrl\" class=\"grid-80 grid-parent\">\n  <form novalidate role=\"form\">\n\n    <div class=\"margins padding rounded-box dark-blue-bg text-on-blue\">\n      <div ng-show=\"!editMode\">\n        <span ng-bind=\"todo.title\" class=\"current-item\"/>\n      </div>\n      <div ng-show=\"editMode\">\n        <input\n          type=\"text\"\n          ng-model=\"todo.title\"\n          class=\"current-item current-item-edit\"\n        />\n      </div>\n    </div>\n\n    <div class=\"margins padding rounded-box medium-blue-bg text-on-blue\">\n      <span>Due:</span>\n        {{ todo.due | date : \'short\' }}\n    </div>\n\n    <div\n      ng-show=\"!editMode\"\n      class=\"margins padding rounded-box todo-text\"\n    >\n      <span ng-bind=\"todo.text\"></span>\n    </div>\n    <div\n      ng-show=\"editMode\"\n    >\n      <textarea ng-model=\"todo.text\" class=\"margins padding todo-text todo-text-edit\"></textarea>\n    </div>\n\n    <div ng-show=\"!editMode\">\n      <span class=\"span-save\">\n        <button ng-click=\"edit()\" class=\"btn\">Edit</button>\n        <button ng-click=\"create()\" class=\"btn\">New</button>\n        <button ng-click=\"remove()\" class=\"btn\">Delete</button>\n      </span>\n    </div>\n    <div ng-show=\"editMode\">\n      <span class=\"span-save\">\n        <button ng-click=\"cancel()\" class=\"btn\">Cancel</button>\n        <button ng-click=\"save()\" class=\"btn\">Save</button>\n      </span>\n    </div>\n  </form>\n</div>\n");}]);
 },{}],"C:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\edit_todo.js":[function(require,module,exports){
 'use strict';
 

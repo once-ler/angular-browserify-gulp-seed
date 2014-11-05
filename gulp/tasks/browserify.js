@@ -2,4 +2,4 @@
 
 var gulp         = require('gulp');
 
-gulp.task('browserify', ['build-app']);
+gulp.task('browserify', ['build-app','build-vendor']);

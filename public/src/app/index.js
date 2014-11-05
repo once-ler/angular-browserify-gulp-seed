@@ -4,6 +4,7 @@
 require('angular');
 require('angular-ui-router');
 
+require('./templates');
 var testModule = require('./hello');
 var todosModule = require('./todos');
 
@@ -12,6 +13,7 @@ angular.element(document).ready(function() {
 
   var requires = [
     'ui.router',
+    'templates',
     testModule.name,
     todosModule.name
   ];

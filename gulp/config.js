@@ -15,8 +15,8 @@ module.exports = {
   },
 
   'images': {
-    'src' : 'app/images/**/*',
-    'dest': 'build/images'
+    'src' : 'public/images/**/*',
+    'dest': 'public/dist/images'
   },
 
   'views': {
@@ -24,7 +24,7 @@ module.exports = {
       'public/src/index.html',
       'public/src/app/**/*.html'
     ],
-    'dest': 'public/dist'
+    'dest': 'public/src/app'
   },
 
   'dist': {

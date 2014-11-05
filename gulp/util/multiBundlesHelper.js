@@ -14,7 +14,10 @@ exports.getBowerPackageIds = function () {
   } catch (e) {
     // does not have a bower.json manifest
   }
-  return _.keys(bowerManifest.dependencies) || [];
+  /**
+    metro-bootstrap is strictly a less package
+  **/
+  return _(_.keys(bowerManifest.dependencies)).without('metro-bootstrap') || [];
 
 }
 
