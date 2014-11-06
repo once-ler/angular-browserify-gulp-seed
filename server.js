@@ -1,19 +1,24 @@
-/**
- * A simple ExpressJS server app
- */
-
 'use strict';
 
+var config  = require('./gulp/config');
 var express = require('express');
-var http = require('http');
-var path = require('path');
-var app = express();
-var server = http.createServer(app);
+var morgan  = require('morgan');
 
-//app.use(express.static('public'));
-app.use(express.static(path.join(__dirname+'/../../', 'public')));
+var server = express();
 
-server.listen(3000, 'localhost');
+// log all requests to the console
+server.use(morgan('dev'));
+//__dirname + '/../../' + 
+server.use(express.static('public'));
+
+// Serve index.html for all routes to leave routing up to Angular
+/*
+server.all('/*', function(req, res) {
+    res.sendFile('index.html', { root: config.dist.root });
+});
+*/
+// Start webserver
+server.listen(config.serverport);
 server.on('listening', function() {
   console.log('Express server started on port %s at %s', server.address().port, server.address().address);
 });
