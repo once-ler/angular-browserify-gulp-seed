@@ -31,9 +31,9 @@ angular.element(document).ready(function() {
   angular.bootstrap(document, ['app']);
 
 });
-},{"./hello":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\index.js","./routes":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js","./templates":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\templates.js","./todos":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\index.js","angular":"angular","angular-ui-router":"angular-ui-router"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\node_modules\\browserify\\lib\\_empty.js":[function(require,module,exports){
+},{"./hello":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\index.js","./routes":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js","./templates":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\templates.js","./todos":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\index.js","angular":"angular","angular-ui-router":"angular-ui-router"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\node_modules\\browserify\\lib\\_empty.js":[function(require,module,exports){
 
-},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\node_modules\\lodash\\dist\\lodash.js":[function(require,module,exports){
+},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\node_modules\\lodash\\dist\\lodash.js":[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -6822,7 +6822,7 @@ angular.element(document).ready(function() {
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\env.js":[function(require,module,exports){
+},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\env.js":[function(require,module,exports){
 /**
  * Angular app environment settings
  */
@@ -6836,14 +6836,14 @@ module.exports = {
   appName: 'app',
 
   // set base template/partials dir
-  baseTemplateDir: '/src/app/',
+  baseTemplateDir: '/views/partials/',
 
   // helper function to get full template path
   templatePath: function (view) { return [this.baseTemplateDir, view].join(''); }
 
 };
 
-},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\controllers.js":[function(require,module,exports){
+},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\controllers.js":[function(require,module,exports){
 'use strict';
 
 require('angular');
@@ -6864,7 +6864,7 @@ controllers.controller('HomeController', ["$scope", function ($scope) {
 }]);
 
 
-},{"angular":"angular"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\index.js":[function(require,module,exports){
+},{"angular":"angular"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\index.js":[function(require,module,exports){
 'use strict';
 
 // require external bower-managed angular libraries
@@ -6896,7 +6896,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   $stateProvider
     .state('hello', {
       url: '/hello',
-      templateUrl: env.templatePath('hello/partials/home.html'),
+      templateUrl: env.templatePath('hello/home.html'),
       controller: 'HomeController'
     });
 
@@ -6905,7 +6905,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
 module.exports = app;
 
 
-},{"../env":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\env.js","./controllers":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\controllers.js","angular":"angular","angular-ui-router":"angular-ui-router","lodash":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\node_modules\\lodash\\dist\\lodash.js"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js":[function(require,module,exports){
+},{"../env":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\env.js","./controllers":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\controllers.js","angular":"angular","angular-ui-router":"angular-ui-router","lodash":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\node_modules\\lodash\\dist\\lodash.js"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -6931,11 +6931,11 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider) {
 Routes.$inject = ["$stateProvider", "$locationProvider", "$urlRouterProvider"];
 
 module.exports = Routes;
-},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\templates.js":[function(require,module,exports){
-angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("hello/partials/home.html","<h1>Hello World! <span ng-if=\"greetings\">{{ greetings }}</span></h1>\n<p>Refresh page to see <code>MyApp.controllers.HomeController</code> in action!</p>\n\n");
-$templateCache.put("todos/partials/imprint.html","<div>\n  {{ text }}\n</div>\n\n<p>\n\n<a href=\"#/todos\">Shut up and take me to the todo list!</a>\n");
-$templateCache.put("todos/partials/todos.html","<div class=\"grid-20 grid-parent\">\n  <div class=\"margins rounded-box text-on-blue\">\n    <div class=\"sidebar-heading sidebar-heading-skin dark-blue-bg\">Your Todos</div>\n    <div ng-controller=\"TodoListCtrl\">\n      <a ng-repeat=\"todo in getTodos()\"\n        ng-click=\"select(todo)\"\n        class=\"sidebar-item-borders sidebar-item dark-blue-bg\"\n        ng-class=\"getCssClass(todo)\"\n      >\n        <span ng-bind=\"todo.title\"></span>\n      </a>\n    </div>\n  </div>\n</div>\n\n<div ng-controller=\"EditTodoCtrl\" class=\"grid-80 grid-parent\">\n  <form novalidate role=\"form\">\n\n    <div class=\"margins padding rounded-box dark-blue-bg text-on-blue\">\n      <div ng-show=\"!editMode\">\n        <span ng-bind=\"todo.title\" class=\"current-item\"/>\n      </div>\n      <div ng-show=\"editMode\">\n        <input\n          type=\"text\"\n          ng-model=\"todo.title\"\n          class=\"current-item current-item-edit\"\n        />\n      </div>\n    </div>\n\n    <div class=\"margins padding rounded-box medium-blue-bg text-on-blue\">\n      <span>Due:</span>\n        {{ todo.due | date : \'short\' }}\n    </div>\n\n    <div\n      ng-show=\"!editMode\"\n      class=\"margins padding rounded-box todo-text\"\n    >\n      <span ng-bind=\"todo.text\"></span>\n    </div>\n    <div\n      ng-show=\"editMode\"\n    >\n      <textarea ng-model=\"todo.text\" class=\"margins padding todo-text todo-text-edit\"></textarea>\n    </div>\n\n    <div ng-show=\"!editMode\">\n      <span class=\"span-save\">\n        <button ng-click=\"edit()\" class=\"btn\">Edit</button>\n        <button ng-click=\"create()\" class=\"btn\">New</button>\n        <button ng-click=\"remove()\" class=\"btn\">Delete</button>\n      </span>\n    </div>\n    <div ng-show=\"editMode\">\n      <span class=\"span-save\">\n        <button ng-click=\"cancel()\" class=\"btn\">Cancel</button>\n        <button ng-click=\"save()\" class=\"btn\">Save</button>\n      </span>\n    </div>\n  </form>\n</div>\n");}]);
-},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\edit_todo.js":[function(require,module,exports){
+},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\templates.js":[function(require,module,exports){
+angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("hello/home.html","<h1>Hello World! <span ng-if=\"greetings\">{{ greetings }}</span></h1>\n<p>Refresh page to see <code>MyApp.controllers.HomeController</code> in action!</p>\n\n");
+$templateCache.put("todos/imprint.html","<div>\n  {{ text }}\n</div>\n\n<p>\n\n<a href=\"#/todos\">Shut up and take me to the todo list!</a>\n");
+$templateCache.put("todos/todos.html","<div class=\"grid-20 grid-parent\">\n  <div class=\"margins rounded-box text-on-blue\">\n    <div class=\"sidebar-heading sidebar-heading-skin dark-blue-bg\">Your Todos</div>\n    <div ng-controller=\"TodoListCtrl\">\n      <a ng-repeat=\"todo in getTodos()\"\n        ng-click=\"select(todo)\"\n        class=\"sidebar-item-borders sidebar-item dark-blue-bg\"\n        ng-class=\"getCssClass(todo)\"\n      >\n        <span ng-bind=\"todo.title\"></span>\n      </a>\n    </div>\n  </div>\n</div>\n\n<div ng-controller=\"EditTodoCtrl\" class=\"grid-80 grid-parent\">\n  <form novalidate role=\"form\">\n\n    <div class=\"margins padding rounded-box dark-blue-bg text-on-blue\">\n      <div ng-show=\"!editMode\">\n        <span ng-bind=\"todo.title\" class=\"current-item\"/>\n      </div>\n      <div ng-show=\"editMode\">\n        <input\n          type=\"text\"\n          ng-model=\"todo.title\"\n          class=\"current-item current-item-edit\"\n        />\n      </div>\n    </div>\n\n    <div class=\"margins padding rounded-box medium-blue-bg text-on-blue\">\n      <span>Due:</span>\n        {{ todo.due | date : \'short\' }}\n    </div>\n\n    <div\n      ng-show=\"!editMode\"\n      class=\"margins padding rounded-box todo-text\"\n    >\n      <span ng-bind=\"todo.text\"></span>\n    </div>\n    <div\n      ng-show=\"editMode\"\n    >\n      <textarea ng-model=\"todo.text\" class=\"margins padding todo-text todo-text-edit\"></textarea>\n    </div>\n\n    <div ng-show=\"!editMode\">\n      <span class=\"span-save\">\n        <button ng-click=\"edit()\" class=\"btn\">Edit</button>\n        <button ng-click=\"create()\" class=\"btn\">New</button>\n        <button ng-click=\"remove()\" class=\"btn\">Delete</button>\n      </span>\n    </div>\n    <div ng-show=\"editMode\">\n      <span class=\"span-save\">\n        <button ng-click=\"cancel()\" class=\"btn\">Cancel</button>\n        <button ng-click=\"save()\" class=\"btn\">Save</button>\n      </span>\n    </div>\n  </form>\n</div>\n");}]);
+},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\edit_todo.js":[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, TodoService) {
@@ -6999,21 +6999,21 @@ module.exports = function($scope, TodoService) {
   }
 };
 
-},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\footer.js":[function(require,module,exports){
+},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\footer.js":[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, VERSION) {
   $scope.version = VERSION;
 };
 
-},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\imprint.js":[function(require,module,exports){
+},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\imprint.js":[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, ImprintService) {
   $scope.text = ImprintService.getText();
 };
 
-},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\index.js":[function(require,module,exports){
+},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\index.js":[function(require,module,exports){
 'use strict';
 require('angular')
 
@@ -7027,14 +7027,14 @@ app.controller('ImprintCtrl', require('./imprint'));
 
 module.exports = app;
 
-},{"./edit_todo":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\edit_todo.js","./footer":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\footer.js","./imprint":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\imprint.js","./todo":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo.js","./todo_list":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo_list.js","angular":"angular"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo.js":[function(require,module,exports){
+},{"./edit_todo":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\edit_todo.js","./footer":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\footer.js","./imprint":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\imprint.js","./todo":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo.js","./todo_list":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo_list.js","angular":"angular"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo.js":[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, TodoService) {
   $scope.todo = TodoService.getTodos()[0];
 };
 
-},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo_list.js":[function(require,module,exports){
+},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo_list.js":[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, TodoService) {
@@ -7055,7 +7055,7 @@ module.exports = function($scope, TodoService) {
 
 };
 
-},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\index.js":[function(require,module,exports){
+},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\index.js":[function(require,module,exports){
 'use strict';
 
 //require('es5-shim');
@@ -7080,19 +7080,19 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   $stateProvider
     .state('todos', {
       url: '/todos',
-      templateUrl: env.templatePath('todos/partials/todos.html'),
+      templateUrl: env.templatePath('todos/todos.html'),
       controller: 'TodoCtrl'
     })
     .state('imprint', {
       url: '/imprint',
-      templateUrl: env.templatePath('todos/partials/imprint.html'),
+      templateUrl: env.templatePath('todos/imprint.html'),
       controller: 'ImprintCtrl'
     });
 }]);
 
 module.exports = app;
 
-},{"../env":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\env.js","./controller":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\index.js","./service":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\index.js","angular":"angular","angular-ui-router":"angular-ui-router","jquery":"jquery"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\imprint.js":[function(require,module,exports){
+},{"../env":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\env.js","./controller":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\index.js","./service":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\index.js","angular":"angular","angular-ui-router":"angular-ui-router","jquery":"jquery"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\imprint.js":[function(require,module,exports){
 'use strict';
 
 var fs = require('fs');
@@ -7108,7 +7108,7 @@ module.exports = function() {
 
 };
 
-},{"fs":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\node_modules\\browserify\\lib\\_empty.js"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\index.js":[function(require,module,exports){
+},{"fs":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\node_modules\\browserify\\lib\\_empty.js"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\index.js":[function(require,module,exports){
 'use strict';
 
 require('angular');
@@ -7120,7 +7120,7 @@ app.service('TodoService', require('./todos'));
 
 module.exports = app;
 
-},{"./imprint":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\imprint.js","./todos":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\todos.js","angular":"angular"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\todos.js":[function(require,module,exports){
+},{"./imprint":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\imprint.js","./todos":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\todos.js","angular":"angular"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\todos.js":[function(require,module,exports){
 'use strict';
 
 module.exports = function() {

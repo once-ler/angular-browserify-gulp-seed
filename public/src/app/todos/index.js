@@ -22,12 +22,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('todos', {
       url: '/todos',
-      templateUrl: env.templatePath('todos/partials/todos.html'),
+      templateUrl: env.templatePath('todos/todos.html'),
       controller: 'TodoCtrl'
     })
     .state('imprint', {
       url: '/imprint',
-      templateUrl: env.templatePath('todos/partials/imprint.html'),
+      templateUrl: env.templatePath('todos/imprint.html'),
       controller: 'ImprintCtrl'
     });
 });

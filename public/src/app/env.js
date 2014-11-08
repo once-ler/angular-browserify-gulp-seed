@@ -11,7 +11,7 @@ module.exports = {
   appName: 'app',
 
   // set base template/partials dir
-  baseTemplateDir: '/src/app/',
+  baseTemplateDir: '/views/partials/',
 
   // helper function to get full template path
   templatePath: function (view) { return [this.baseTemplateDir, view].join(''); }

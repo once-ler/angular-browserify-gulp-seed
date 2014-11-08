@@ -22,7 +22,7 @@ module.exports = {
   'views': {
     'src': [
       'public/src/index.html',
-      'public/src/app/**/*.html'
+      'public/partials/**/*.html'
     ],
     'dest': 'public/src/app'
   },

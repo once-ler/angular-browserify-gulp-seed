@@ -29,7 +29,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('hello', {
       url: '/hello',
-      templateUrl: env.templatePath('hello/partials/home.html'),
+      templateUrl: env.templatePath('hello/home.html'),
       controller: 'HomeController'
     });
 
