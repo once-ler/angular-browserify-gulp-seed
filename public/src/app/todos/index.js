@@ -8,7 +8,7 @@ require('angular');
 require('angular-ui-router')
 
 //Dependents
-var env = require('../env');
+//var env = require('../env');
 var services = require('./service');
 var controllers = require('./controller');
 
@@ -22,12 +22,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('todos', {
       url: '/todos',
-      templateUrl: env.templatePath('todos/todos.html'),
+      templateUrl: 'todos/todos.html',
       controller: 'TodoCtrl'
     })
     .state('imprint', {
       url: '/imprint',
-      templateUrl: env.templatePath('todos/imprint.html'),
+      templateUrl: 'todos/imprint.html',
       controller: 'ImprintCtrl'
     });
 });

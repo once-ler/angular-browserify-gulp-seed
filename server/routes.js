@@ -46,17 +46,6 @@ var routes = [
     accessLevel: accessLevels.admin
   },
 
-  {
-    path: '/',
-    httpMethod: 'GET',
-    middleware: [function(req, res) {
-      res.render('index', {
-        title: "EJS example",
-        headline: "Our Angular app 'hello' will be loaded here if all turns out well!"
-      });
-    }]
-  },
-
   // All other get requests should be handled by AngularJS's client-side routing system
   {
     path: '/*',
@@ -72,7 +61,10 @@ var routes = [
         'username': username,
         'role': role
       }));
-      res.render('index');
+      res.render('index', {
+        title: "EJS example",
+        headline: "Our Angular app 'hello' will be loaded here if all turns out well!!!"
+      });
     }]
   }
   

@@ -6822,27 +6822,6 @@ angular.element(document).ready(function() {
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\env.js":[function(require,module,exports){
-/**
- * Angular app environment settings
- */
-'use strict';
-
-module.exports = {
-
-  foo: 'bar',
-
-  // root application name; all ng-modules for this app will be put underneath this namespace
-  appName: 'app',
-
-  // set base template/partials dir
-  baseTemplateDir: '/views/partials/',
-
-  // helper function to get full template path
-  templatePath: function (view) { return [this.baseTemplateDir, view].join(''); }
-
-};
-
 },{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\controllers.js":[function(require,module,exports){
 'use strict';
 
@@ -6875,7 +6854,7 @@ require('angular-ui-router');
 require('./controllers');
 
 // require environment settings
-var env = require('../env');
+//var env = require('../env');
 
 // require a vanilla npm-managed module
 var _ = require('lodash');
@@ -6896,7 +6875,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   $stateProvider
     .state('hello', {
       url: '/hello',
-      templateUrl: env.templatePath('hello/home.html'),
+      templateUrl: 'hello/home.html',
       controller: 'HomeController'
     });
 
@@ -6905,7 +6884,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
 module.exports = app;
 
 
-},{"../env":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\env.js","./controllers":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\controllers.js","angular":"angular","angular-ui-router":"angular-ui-router","lodash":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\node_modules\\lodash\\dist\\lodash.js"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js":[function(require,module,exports){
+},{"./controllers":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\controllers.js","angular":"angular","angular-ui-router":"angular-ui-router","lodash":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\node_modules\\lodash\\dist\\lodash.js"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -7066,7 +7045,7 @@ require('angular');
 require('angular-ui-router')
 
 //Dependents
-var env = require('../env');
+//var env = require('../env');
 var services = require('./service');
 var controllers = require('./controller');
 
@@ -7080,19 +7059,19 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   $stateProvider
     .state('todos', {
       url: '/todos',
-      templateUrl: env.templatePath('todos/todos.html'),
+      templateUrl: 'todos/todos.html',
       controller: 'TodoCtrl'
     })
     .state('imprint', {
       url: '/imprint',
-      templateUrl: env.templatePath('todos/imprint.html'),
+      templateUrl: 'todos/imprint.html',
       controller: 'ImprintCtrl'
     });
 }]);
 
 module.exports = app;
 
-},{"../env":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\env.js","./controller":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\index.js","./service":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\index.js","angular":"angular","angular-ui-router":"angular-ui-router","jquery":"jquery"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\imprint.js":[function(require,module,exports){
+},{"./controller":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\index.js","./service":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\index.js","angular":"angular","angular-ui-router":"angular-ui-router","jquery":"jquery"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\imprint.js":[function(require,module,exports){
 'use strict';
 
 var fs = require('fs');

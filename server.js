@@ -30,7 +30,7 @@ app.use(morgan('dev'));
 app.engine('.html', require('ejs').__express);
 
 // Optional since express defaults to CWD/views
-app.set('views', __dirname + '/public/views');
+app.set('views', __dirname + '/server/views');
 
 // Without this you would need to
 // supply the extension to res.render()

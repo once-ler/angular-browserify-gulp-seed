@@ -8,7 +8,7 @@ require('angular-ui-router');
 require('./controllers');
 
 // require environment settings
-var env = require('../env');
+//var env = require('../env');
 
 // require a vanilla npm-managed module
 var _ = require('lodash');
@@ -29,7 +29,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('hello', {
       url: '/hello',
-      templateUrl: env.templatePath('hello/home.html'),
+      templateUrl: 'hello/home.html',
       controller: 'HomeController'
     });
 
