@@ -10,5 +10,7 @@ angular-browserify-gulp-seed
     + include nodemon so we can watch for changes in express and middleware
   + **_security_**
     + must include anthentication **_and_** authorization modules for angular
+  + **_best practice_**
+    + best practice directory structure for angular and gulp
   + **_bootstrap_**
     + should look good out of the box
