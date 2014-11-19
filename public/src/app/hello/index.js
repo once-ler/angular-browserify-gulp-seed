@@ -18,6 +18,10 @@ var _ = require('lodash');
 //  console.log('env[', key, '] = ', env[key]);
 //});
 
+//Dependents
+var routingConfig = require('../routingConfig');
+var access = routingConfig.accessLevels;
+
 // define and export app
 var app = module.exports = angular.module('app.hello', [
   'ui.router',
@@ -30,7 +34,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     .state('hello', {
       url: '/hello',
       templateUrl: 'hello/home.html',
-      controller: 'HomeController'
+      controller: 'HomeController',
+      data: {
+        access: access.public
+      }
     });
 
 });

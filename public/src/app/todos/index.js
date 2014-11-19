@@ -8,6 +8,8 @@ require('angular');
 require('angular-ui-router')
 
 //Dependents
+var routingConfig = require('../routingConfig');
+var access = routingConfig.accessLevels;
 //var env = require('../env');
 var services = require('./service');
 var controllers = require('./controller');
@@ -23,12 +25,19 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     .state('todos', {
       url: '/todos',
       templateUrl: 'todos/todos.html',
-      controller: 'TodoCtrl'
+      controller: 'TodoCtrl',
+      data: {
+        access: access.public
+      }
     })
+    //Testing authorization
     .state('imprint', {
       url: '/imprint',
       templateUrl: 'todos/imprint.html',
-      controller: 'ImprintCtrl'
+      controller: 'ImprintCtrl',
+      data: {
+        access: access.user
+      }
     });
 });
 

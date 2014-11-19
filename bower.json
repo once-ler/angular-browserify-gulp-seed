@@ -20,8 +20,9 @@
   ],
   "dependencies": {
     "jquery": "~1.11.1",
-    "angular": "~1.2.21",
+    "angular": "~1.2.12",
     "angular-ui-router": "~0.2.10",
+    "angular-cookies": "~1.2.12",
     "metro-bootstrap": "*"
   }
 }

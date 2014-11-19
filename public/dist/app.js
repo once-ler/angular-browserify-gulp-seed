@@ -8,6 +8,7 @@ require('angular-ui-router');
 require('./templates');
 var testModule = require('./hello');
 var todosModule = require('./todos');
+var authModule = require('./auth');
 
 // create and bootstrap application
 angular.element(document).ready(function() {
@@ -16,7 +17,8 @@ angular.element(document).ready(function() {
     'ui.router',
     'templates',
     testModule.name,
-    todosModule.name
+    todosModule.name,
+    authModule.name
   ];
 
   // mount on window for testing
@@ -26,14 +28,14 @@ angular.element(document).ready(function() {
 
   angular.module('app').config(require('./routes')); //defaults for ui-router
 
-  //angular.module('app').run(require('./on_run'));
+  angular.module('app').run(require('./on_run'));
 
   angular.bootstrap(document, ['app']);
 
 });
-},{"./hello":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\index.js","./routes":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js","./templates":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\templates.js","./todos":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\index.js","angular":"angular","angular-ui-router":"angular-ui-router"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\node_modules\\browserify\\lib\\_empty.js":[function(require,module,exports){
+},{"./auth":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\index.js","./hello":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\index.js","./on_run":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\on_run.js","./routes":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js","./templates":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\templates.js","./todos":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\index.js","angular":"angular","angular-ui-router":"angular-ui-router"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\node_modules\\browserify\\lib\\_empty.js":[function(require,module,exports){
 
-},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\node_modules\\lodash\\dist\\lodash.js":[function(require,module,exports){
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\node_modules\\lodash\\dist\\lodash.js":[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -6822,7 +6824,248 @@ angular.element(document).ready(function() {
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\controllers.js":[function(require,module,exports){
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\controllers\\NavCtrl.js":[function(require,module,exports){
+'use strict';
+
+module.exports = function($rootScope, $scope, $location, Auth) {
+  $scope.user = Auth.user;
+  $scope.userRoles = Auth.userRoles;
+  $scope.accessLevels = Auth.accessLevels;
+
+  $scope.close = function() {
+    $rootScope.error = null;
+  };
+
+  $scope.logout = function() {
+    Auth.logout(function() {
+      $location.path('/login');
+    }, function() {
+      $rootScope.error = "Failed to logout";
+    });
+  };
+
+  $scope.menuToggle = function() {
+    $("#wrapper").toggleClass("active");
+  };
+}
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\controllers\\index.js":[function(require,module,exports){
+'use strict';
+
+require('angular')
+
+var app = angular.module('app.auth.controllers',[]);
+
+app.controller('NavCtrl', require('./NavCtrl'));
+
+module.exports = app;
+
+},{"./NavCtrl":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\controllers\\NavCtrl.js","angular":"angular"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\directives\\accessLevelDirective.js":[function(require,module,exports){
+'use strict';
+
+module.exports = function(Auth) {
+  return {
+    restrict: 'A',
+    link: function($scope, element, attrs) {
+      var prevDisp = element.css('display'),
+        userRole, accessLevel;
+      $scope.user = Auth.user;
+      $scope.$watch('user', function(user) {
+        if (user.role) userRole = user.role;
+        updateCSS();
+      }, true);
+      attrs.$observe('accessLevel', function(al) {
+        if (al) accessLevel = $scope.$eval(al);
+        updateCSS();
+      });
+
+      function updateCSS() {
+        if (userRole && accessLevel) {
+          if (!Auth.authorize(accessLevel, userRole))
+            element.css('display', 'none');
+          else element.css('display', prevDisp);
+        }
+      }
+    }
+  };
+};
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\directives\\activeNavDirective.js":[function(require,module,exports){
+'use strict';
+
+module.exports = function($location) {
+  
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      var anchor = element[0];
+      if (element[0].tagName.toUpperCase() != 'A')
+        anchor = element.find('a')[0];
+      var path = anchor.href;
+
+      scope.location = $location;
+      scope.$watch('location.absUrl()', function(newPath) {
+        path = normalizeUrl(path);
+        newPath = normalizeUrl(newPath);
+
+        if (path === newPath ||
+          (attrs.activeNav === 'nestedTop' && newPath.indexOf(path) === 0)) {
+          element.addClass('active');
+        } else {
+          element.removeClass('active');
+        }
+      });
+    }
+
+  };
+
+  function normalizeUrl(url) {
+    if (url[url.length - 1] !== '/')
+      url = url + '/';
+    return url;
+  }
+
+}
+
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\directives\\alertBox.js":[function(require,module,exports){
+'use strict';
+
+module.exports = function () {
+  return {
+      restrict: 'A', //This menas that it will be used as an attribute and NOT as an element. I don't like creating custom HTML elements
+      replace: true,
+      scope: false, //scope is not inherited, scope is same as parent 
+      templateUrl: "./src/app/auth/partials/alert-box.tpl.html"
+  };
+};
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\directives\\index.js":[function(require,module,exports){
+'use strict';
+
+require('angular')
+
+var app = angular.module('app.auth.directives',[]);
+
+app.directive('accessLevel', require('./accessLevelDirective'));
+app.directive('activeNav', require('./activeNavDirective'));
+app.directive('alertBox', require('./alertBox'));
+
+module.exports = app;
+
+},{"./accessLevelDirective":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\directives\\accessLevelDirective.js","./activeNavDirective":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\directives\\activeNavDirective.js","./alertBox":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\directives\\alertBox.js","angular":"angular"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\index.js":[function(require,module,exports){
+'use strict';
+
+require('jquery');
+require('angular');
+require('angular-ui-router')
+
+var services = require('./services');
+var controllers = require('./controllers');
+var directives = require('./directives');
+
+var app = angular.module('app.auth', [ 'ui.router', services.name, controllers.name, directives.name ]);
+
+/*
+app.config(function ($stateProvider, $urlRouterProvider) {
+
+  $stateProvider
+    .state('todos', {
+      url: '/todos',
+      templateUrl: 'todos/todos.html',
+      controller: 'TodoCtrl'
+    })
+    .state('imprint', {
+      url: '/imprint',
+      templateUrl: 'todos/imprint.html',
+      controller: 'ImprintCtrl'
+    });
+});
+*/
+
+module.exports = app;
+
+},{"./controllers":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\controllers\\index.js","./directives":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\directives\\index.js","./services":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\services\\index.js","angular":"angular","angular-ui-router":"angular-ui-router","jquery":"jquery"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\services\\authService.js":[function(require,module,exports){
+'use strict';
+
+var routingConfig = require('../../routingConfig');
+
+module.exports = function($http, $cookieStore) {
+
+  var accessLevels = routingConfig.accessLevels,
+    userRoles = routingConfig.userRoles,
+    currentUser = $cookieStore.get('user') || {
+      username: '',
+      role: userRoles.public
+    };
+
+  $cookieStore.remove('user');
+
+  function changeUser(user) {
+    angular.extend(currentUser, user);
+  }
+
+  return {
+    authorize: function(accessLevel, role) {
+      if (role === undefined) {
+        role = currentUser.role;
+      }
+
+      return accessLevel.bitMask & role.bitMask;
+    },
+    isLoggedIn: function(user) {
+      if (user === undefined) {
+        user = currentUser;
+      }
+      return user.role.title === userRoles.user.title || user.role.title === userRoles.admin.title;
+    },
+    register: function(user, success, error) {
+      $http.post('/register', user).success(function(res) {
+        changeUser(res);
+        success();
+      }).error(error);
+    },
+    login: function(user, success, error) {
+      $http.post('/login', user).success(function(user) {
+        changeUser(user);
+        success(user);
+      }).error(error);
+    },
+    logout: function(success, error) {
+      $http.post('/logout').success(function() {
+        changeUser({
+          username: '',
+          role: userRoles.public
+        });
+        success();
+      }).error(error);
+    },
+    accessLevels: accessLevels,
+    userRoles: userRoles,
+    user: currentUser
+  };
+}
+
+},{"../../routingConfig":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\routingConfig.js"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\services\\index.js":[function(require,module,exports){
+'use strict';
+
+require('angular');
+require('angular-cookies');
+
+var app = angular.module('app.auth.services',['ngCookies']);
+
+app.factory('Auth', require('./authService'));
+app.factory('Users', require('./userService'));
+
+module.exports = app;
+
+},{"./authService":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\services\\authService.js","./userService":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\services\\userService.js","angular":"angular","angular-cookies":"angular-cookies"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\auth\\services\\userService.js":[function(require,module,exports){
+'use strict';
+
+module.exports = function($http) {
+  return {
+    getAll: function(success, error) {
+      $http.get('/users').success(success).error(error);
+    }
+  };
+}
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\controllers.js":[function(require,module,exports){
 'use strict';
 
 require('angular');
@@ -6843,7 +7086,7 @@ controllers.controller('HomeController', ["$scope", function ($scope) {
 }]);
 
 
-},{"angular":"angular"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\index.js":[function(require,module,exports){
+},{"angular":"angular"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\index.js":[function(require,module,exports){
 'use strict';
 
 // require external bower-managed angular libraries
@@ -6864,6 +7107,10 @@ var _ = require('lodash');
 //  console.log('env[', key, '] = ', env[key]);
 //});
 
+//Dependents
+var routingConfig = require('../routingConfig');
+var access = routingConfig.accessLevels;
+
 // define and export app
 var app = module.exports = angular.module('app.hello', [
   'ui.router',
@@ -6876,7 +7123,10 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
     .state('hello', {
       url: '/hello',
       templateUrl: 'hello/home.html',
-      controller: 'HomeController'
+      controller: 'HomeController',
+      data: {
+        access: access.public
+      }
     });
 
 }]);
@@ -6884,37 +7134,251 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
 module.exports = app;
 
 
-},{"./controllers":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\controllers.js","angular":"angular","angular-ui-router":"angular-ui-router","lodash":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\node_modules\\lodash\\dist\\lodash.js"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js":[function(require,module,exports){
+},{"../routingConfig":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\routingConfig.js","./controllers":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\hello\\controllers.js","angular":"angular","angular-ui-router":"angular-ui-router","lodash":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\node_modules\\lodash\\dist\\lodash.js"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\on_run.js":[function(require,module,exports){
 'use strict';
 
 /**
  * @ngInject
  */
-function Routes($stateProvider, $locationProvider, $urlRouterProvider) {
-
+//function OnRun($rootScope, AppSettings) {
+function OnRun($rootScope, $state, Auth) {
+  // change page title based on state
   /*
-  $locationProvider.html5Mode(true);
+  $rootScope.$on('$stateChangeSuccess', function(event, toState) {
+    $rootScope.pageTitle = '';
 
-  $stateProvider
-  .state('Home', {
-    url: '/',
-    controller: 'ExampleCtrl as home',
-    templateUrl: 'home.html',
-    title: 'Home'
+    if ( toState.title ) {
+      $rootScope.pageTitle += toState.title;
+      $rootScope.pageTitle += ' \u2014 ';
+    }
+
+    $rootScope.pageTitle += AppSettings.appTitle;
   });
   */
-  
-  $urlRouterProvider.otherwise('/');
+
+  $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+      
+      if(!('data' in toState) || !('access' in toState.data)){
+          $rootScope.error = "Access undefined for this state";
+          event.preventDefault();
+      }
+      else if (!Auth.authorize(toState.data.access)) {
+          $rootScope.error = "Seems like you tried accessing a route you don't have access to...";
+          event.preventDefault();
+
+          if(fromState.url === '^') {
+              if(Auth.isLoggedIn()) {
+                  $state.go('user.home');
+              } else {
+                  $rootScope.error = null;
+                  $state.go('anon.login');
+              }
+          }
+      }
+  });
 
 }
-Routes.$inject = ["$stateProvider", "$locationProvider", "$urlRouterProvider"];
+OnRun.$inject = ["$rootScope", "$state", "Auth"];
+
+module.exports = OnRun;
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js":[function(require,module,exports){
+'use strict';
+
+var routingConfig = require('./routingConfig');
+/**
+ * @ngInject
+ */
+function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProvider) {
+
+  /*
+  Each module will configure their own routes and authorization
+  */
+  
+  var access = routingConfig.accessLevels;
+
+  // Public routes
+  $stateProvider
+  .state('public', {
+      abstract: true,
+      template: "<ui-view/>",
+      data: {
+          access: access.public
+      }
+  })
+  .state('public.404', {
+      url: '/404/',
+      templateUrl: '404.html'
+  });
+
+  // Anonymous routes
+  $stateProvider
+  .state('anon', {
+      abstract: true,
+      template: "<ui-view/>",
+      data: {
+          access: access.anon
+      }
+  })
+  .state('anon.login', {
+      url: '/login/',
+      templateUrl: 'login',
+      controller: 'LoginCtrl'
+  });
+
+  $urlRouterProvider.otherwise('/404');
+
+  // FIX for trailing slashes. Gracefully "borrowed" from https://github.com/angular-ui/ui-router/issues/50
+  $urlRouterProvider.rule(function($injector, $location) {
+      if($location.protocol() === 'file')
+          return;
+
+      var path = $location.path()
+      // Note: misnomer. This returns a query object, not a search string
+          , search = $location.search()
+          , params
+          ;
+
+      // check to see if the path already ends in '/'
+      if (path[path.length - 1] === '/') {
+          return;
+      }
+
+      // If there was no search string / query params, return with a `/`
+      if (Object.keys(search).length === 0) {
+          return path + '/';
+      }
+
+      // Otherwise build the search string and return a `/?` prefix
+      params = [];
+      angular.forEach(search, function(v, k){
+          params.push(k + '=' + v);
+      });
+      return path + '/?' + params.join('&');
+  });
+
+  $locationProvider.html5Mode(false);
+
+  $httpProvider.interceptors.push(["$q", "$location", function($q, $location) {
+      return {
+          'responseError': function(response) {
+              if(response.status === 401 || response.status === 403) {
+                  $location.path('/login');
+              }
+              return $q.reject(response);
+          }
+      };
+  }]);
+
+}
+Routes.$inject = ["$stateProvider", "$locationProvider", "$urlRouterProvider", "$httpProvider"];
 
 module.exports = Routes;
-},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\templates.js":[function(require,module,exports){
-angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("hello/home.html","<h1>Hello World! <span ng-if=\"greetings\">{{ greetings }}</span></h1>\n<p>Refresh page to see <code>MyApp.controllers.HomeController</code> in action!</p>\n\n");
+},{"./routingConfig":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\routingConfig.js"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\routingConfig.js":[function(require,module,exports){
+(function(exports){
+
+    var config = {
+
+        /* List all the roles you wish to use in the app
+        * You have a max of 31 before the bit shift pushes the accompanying integer out of
+        * the memory footprint for an integer
+        */
+        roles :[
+            'public',
+            'user',
+            'admin'],
+
+        /*
+        Build out all the access levels you want referencing the roles listed above
+        You can use the "*" symbol to represent access to all roles.
+
+        The left-hand side specifies the name of the access level, and the right-hand side
+        specifies what user roles have access to that access level. E.g. users with user role
+        'user' and 'admin' have access to the access level 'user'.
+         */
+        accessLevels : {
+            'public' : "*",
+            'anon': ['public'],
+            'user' : ['user', 'admin'],
+            'admin': ['admin']
+        }
+
+    }
+
+    exports.userRoles = buildRoles(config.roles);
+    exports.accessLevels = buildAccessLevels(config.accessLevels, exports.userRoles);
+
+    /*
+        Method to build a distinct bit mask for each role
+        It starts off with "1" and shifts the bit to the left for each element in the
+        roles array parameter
+     */
+
+    function buildRoles(roles){
+
+        var bitMask = "01";
+        var userRoles = {};
+
+        for(var role in roles){
+            var intCode = parseInt(bitMask, 2);
+            userRoles[roles[role]] = {
+                bitMask: intCode,
+                title: roles[role]
+            };
+            bitMask = (intCode << 1 ).toString(2)
+        }
+
+        return userRoles;
+    }
+
+    /*
+    This method builds access level bit masks based on the accessLevelDeclaration parameter which must
+    contain an array for each access level containing the allowed user roles.
+     */
+    function buildAccessLevels(accessLevelDeclarations, userRoles){
+
+        var accessLevels = {};
+        for(var level in accessLevelDeclarations){
+
+            if(typeof accessLevelDeclarations[level] == 'string'){
+                if(accessLevelDeclarations[level] == '*'){
+
+                    var resultBitMask = '';
+
+                    for( var role in userRoles){
+                        resultBitMask += "1"
+                    }
+                    //accessLevels[level] = parseInt(resultBitMask, 2);
+                    accessLevels[level] = {
+                        bitMask: parseInt(resultBitMask, 2)
+                    };
+                }
+                else console.log("Access Control Error: Could not parse '" + accessLevelDeclarations[level] + "' as access definition for level '" + level + "'")
+
+            }
+            else {
+
+                var resultBitMask = 0;
+                for(var role in accessLevelDeclarations[level]){
+                    if(userRoles.hasOwnProperty(accessLevelDeclarations[level][role]))
+                        resultBitMask = resultBitMask | userRoles[accessLevelDeclarations[level][role]].bitMask
+                    else console.log("Access Control Error: Could not find role '" + accessLevelDeclarations[level][role] + "' in registered roles while building access for '" + level + "'")
+                }
+                accessLevels[level] = {
+                    bitMask: resultBitMask
+                };
+            }
+        }
+
+        return accessLevels;
+    }
+
+})(typeof exports === 'undefined' ? this['routingConfig'] = {} : exports);
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\templates.js":[function(require,module,exports){
+angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("404.html","<h1>404</h1>\r\n<p>Oops! Ain\'t nothing here.</p>");
+$templateCache.put("hello/home.html","<h1>Hello World! <span ng-if=\"greetings\">{{ greetings }}</span></h1>\n<p>Refresh page to see <code>MyApp.controllers.HomeController</code> in action!</p>\n\n");
 $templateCache.put("todos/imprint.html","<div>\n  {{ text }}\n</div>\n\n<p>\n\n<a href=\"#/todos\">Shut up and take me to the todo list!</a>\n");
 $templateCache.put("todos/todos.html","<div class=\"grid-20 grid-parent\">\n  <div class=\"margins rounded-box text-on-blue\">\n    <div class=\"sidebar-heading sidebar-heading-skin dark-blue-bg\">Your Todos</div>\n    <div ng-controller=\"TodoListCtrl\">\n      <a ng-repeat=\"todo in getTodos()\"\n        ng-click=\"select(todo)\"\n        class=\"sidebar-item-borders sidebar-item dark-blue-bg\"\n        ng-class=\"getCssClass(todo)\"\n      >\n        <span ng-bind=\"todo.title\"></span>\n      </a>\n    </div>\n  </div>\n</div>\n\n<div ng-controller=\"EditTodoCtrl\" class=\"grid-80 grid-parent\">\n  <form novalidate role=\"form\">\n\n    <div class=\"margins padding rounded-box dark-blue-bg text-on-blue\">\n      <div ng-show=\"!editMode\">\n        <span ng-bind=\"todo.title\" class=\"current-item\"/>\n      </div>\n      <div ng-show=\"editMode\">\n        <input\n          type=\"text\"\n          ng-model=\"todo.title\"\n          class=\"current-item current-item-edit\"\n        />\n      </div>\n    </div>\n\n    <div class=\"margins padding rounded-box medium-blue-bg text-on-blue\">\n      <span>Due:</span>\n        {{ todo.due | date : \'short\' }}\n    </div>\n\n    <div\n      ng-show=\"!editMode\"\n      class=\"margins padding rounded-box todo-text\"\n    >\n      <span ng-bind=\"todo.text\"></span>\n    </div>\n    <div\n      ng-show=\"editMode\"\n    >\n      <textarea ng-model=\"todo.text\" class=\"margins padding todo-text todo-text-edit\"></textarea>\n    </div>\n\n    <div ng-show=\"!editMode\">\n      <span class=\"span-save\">\n        <button ng-click=\"edit()\" class=\"btn\">Edit</button>\n        <button ng-click=\"create()\" class=\"btn\">New</button>\n        <button ng-click=\"remove()\" class=\"btn\">Delete</button>\n      </span>\n    </div>\n    <div ng-show=\"editMode\">\n      <span class=\"span-save\">\n        <button ng-click=\"cancel()\" class=\"btn\">Cancel</button>\n        <button ng-click=\"save()\" class=\"btn\">Save</button>\n      </span>\n    </div>\n  </form>\n</div>\n");}]);
-},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\edit_todo.js":[function(require,module,exports){
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\edit_todo.js":[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, TodoService) {
@@ -6978,21 +7442,21 @@ module.exports = function($scope, TodoService) {
   }
 };
 
-},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\footer.js":[function(require,module,exports){
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\footer.js":[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, VERSION) {
   $scope.version = VERSION;
 };
 
-},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\imprint.js":[function(require,module,exports){
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\imprint.js":[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, ImprintService) {
   $scope.text = ImprintService.getText();
 };
 
-},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\index.js":[function(require,module,exports){
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\index.js":[function(require,module,exports){
 'use strict';
 require('angular')
 
@@ -7006,14 +7470,14 @@ app.controller('ImprintCtrl', require('./imprint'));
 
 module.exports = app;
 
-},{"./edit_todo":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\edit_todo.js","./footer":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\footer.js","./imprint":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\imprint.js","./todo":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo.js","./todo_list":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo_list.js","angular":"angular"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo.js":[function(require,module,exports){
+},{"./edit_todo":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\edit_todo.js","./footer":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\footer.js","./imprint":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\imprint.js","./todo":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo.js","./todo_list":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo_list.js","angular":"angular"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo.js":[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, TodoService) {
   $scope.todo = TodoService.getTodos()[0];
 };
 
-},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo_list.js":[function(require,module,exports){
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\todo_list.js":[function(require,module,exports){
 'use strict';
 
 module.exports = function($scope, TodoService) {
@@ -7034,7 +7498,7 @@ module.exports = function($scope, TodoService) {
 
 };
 
-},{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\index.js":[function(require,module,exports){
+},{}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\index.js":[function(require,module,exports){
 'use strict';
 
 //require('es5-shim');
@@ -7045,6 +7509,8 @@ require('angular');
 require('angular-ui-router')
 
 //Dependents
+var routingConfig = require('../routingConfig');
+var access = routingConfig.accessLevels;
 //var env = require('../env');
 var services = require('./service');
 var controllers = require('./controller');
@@ -7060,18 +7526,25 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
     .state('todos', {
       url: '/todos',
       templateUrl: 'todos/todos.html',
-      controller: 'TodoCtrl'
+      controller: 'TodoCtrl',
+      data: {
+        access: access.public
+      }
     })
+    //Testing authorization
     .state('imprint', {
       url: '/imprint',
       templateUrl: 'todos/imprint.html',
-      controller: 'ImprintCtrl'
+      controller: 'ImprintCtrl',
+      data: {
+        access: access.user
+      }
     });
 }]);
 
 module.exports = app;
 
-},{"./controller":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\index.js","./service":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\index.js","angular":"angular","angular-ui-router":"angular-ui-router","jquery":"jquery"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\imprint.js":[function(require,module,exports){
+},{"../routingConfig":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\routingConfig.js","./controller":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\controller\\index.js","./service":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\index.js","angular":"angular","angular-ui-router":"angular-ui-router","jquery":"jquery"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\imprint.js":[function(require,module,exports){
 'use strict';
 
 var fs = require('fs');
@@ -7087,7 +7560,7 @@ module.exports = function() {
 
 };
 
-},{"fs":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\node_modules\\browserify\\lib\\_empty.js"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\index.js":[function(require,module,exports){
+},{"fs":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\node_modules\\browserify\\lib\\_empty.js"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\index.js":[function(require,module,exports){
 'use strict';
 
 require('angular');
@@ -7099,7 +7572,7 @@ app.service('TodoService', require('./todos'));
 
 module.exports = app;
 
-},{"./imprint":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\imprint.js","./todos":"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\todos.js","angular":"angular"}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\todos.js":[function(require,module,exports){
+},{"./imprint":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\imprint.js","./todos":"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\todos.js","angular":"angular"}],"c:\\cygwin\\home\\taoh02\\angular-browserify-gulp-seed\\public\\src\\app\\todos\\service\\todos.js":[function(require,module,exports){
 'use strict';
 
 module.exports = function() {
