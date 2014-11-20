@@ -11,10 +11,10 @@ var routes = [
 
   // Partials will be handled by angular templateCache
   // Views will be handled by ejs
-  /*
   // Views
+  /*
   {
-      path: '/partials/*',
+      path: '/views/*',
       httpMethod: 'GET',
       middleware: [function (req, res) {
           var requestedView = path.join('./', req.url);
@@ -22,7 +22,7 @@ var routes = [
       }]
   },
   */
-  
+
   // Local Auth
   {
     path: '/register',
@@ -46,11 +46,30 @@ var routes = [
     accessLevel: accessLevels.admin
   },
 
+  // login
+  {
+    path: '/login',
+    httpMethod: 'GET',
+    middleware: [function(req, res) {
+      //res.cookie('XSRF-TOKEN', req.csrfToken());
+      //console.log(res.cookie('XSRF-TOKEN'))
+      //csrf token was previously set by middleware
+      //Reset
+      //res.cookie('XSRF-TOKEN', req.csrfToken());
+      res.render('login', {
+        //token: req.cookies['XSRF-TOKEN'],
+        token: req.csrfToken(),
+        message: ""
+      });
+    }]
+  },  
+
   // All other get requests should be handled by AngularJS's client-side routing system
   {
     path: '/*',
     httpMethod: 'GET',
     middleware: [function(req, res) {
+
       var role = userRoles.public,
         username = '';
       if (req.user) {
@@ -62,7 +81,7 @@ var routes = [
         'role': role
       }));
       res.render('index', {
-        title: "EJS example",
+        title: "EJS as HTML example",
         headline: "Our Angular app 'hello' will be loaded here if all turns out well!!!"
       });
     }]

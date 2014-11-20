@@ -29,14 +29,16 @@ function OnRun($rootScope, $state, Auth) {
           $rootScope.error = "Seems like you tried accessing a route you don't have access to...";
           event.preventDefault();
 
-          if(fromState.url === '^') {
+          //if(fromState.url === '^') {
               if(Auth.isLoggedIn()) {
                   $state.go('user.home');
               } else {
                   $rootScope.error = null;
-                  $state.go('anon.login');
+                  //hack to leave app
+                  window.location.href = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/login'; 
+                  //$state.go('anon.login');
               }
-          }
+          //}
       }
   });
 

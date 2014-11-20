@@ -38,6 +38,8 @@ app.set('views', __dirname + '/server/views');
 app.set('view engine', 'html');
 
 app.use(express.static(path.join(__dirname, 'public/dist')));
+app.use(express.static(path.join(__dirname, 'server/public')));
+
 app.use(cookieParser());
 app.use(session(
   {
@@ -46,10 +48,23 @@ app.use(session(
 
 //var env = process.env.NODE_ENV || 'development';
 //if ('development' === env || 'production' === env) {
-  app.use(csrf());
+
+//Tell express where csrf will be located
+var csrfValue = function(req) {
+  var token = req.cookies['XSRF-TOKEN']
+    || (req.body && req.body._csrf)
+    || (req.query && req.query._csrf)
+    || (req.headers['x-csrf-token'])
+    || (req.headers['x-xsrf-token']);
+    console.log(token)
+  return token;
+};
+
+  app.use(csrf({value: csrfValue}));
   app.use(function(req, res, next) {
-      res.cookie('XSRF-TOKEN', req.csrfToken());
-      next();
+    //console.log(req.csrfToken());
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    next();
   });
 //}
 

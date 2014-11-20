@@ -7166,14 +7166,16 @@ function OnRun($rootScope, $state, Auth) {
           $rootScope.error = "Seems like you tried accessing a route you don't have access to...";
           event.preventDefault();
 
-          if(fromState.url === '^') {
+          //if(fromState.url === '^') {
               if(Auth.isLoggedIn()) {
                   $state.go('user.home');
               } else {
                   $rootScope.error = null;
-                  $state.go('anon.login');
+                  //hack to leave app
+                  window.location.href = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/login'; 
+                  //$state.go('anon.login');
               }
-          }
+          //}
       }
   });
 
@@ -7210,22 +7212,7 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
       templateUrl: '404.html'
   });
 
-  // Anonymous routes
-  $stateProvider
-  .state('anon', {
-      abstract: true,
-      template: "<ui-view/>",
-      data: {
-          access: access.anon
-      }
-  })
-  .state('anon.login', {
-      url: '/login/',
-      templateUrl: 'login',
-      controller: 'LoginCtrl'
-  });
-
-  $urlRouterProvider.otherwise('/404');
+  $urlRouterProvider.otherwise('/hello');
 
   // FIX for trailing slashes. Gracefully "borrowed" from https://github.com/angular-ui/ui-router/issues/50
   $urlRouterProvider.rule(function($injector, $location) {
@@ -7235,8 +7222,7 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
       var path = $location.path()
       // Note: misnomer. This returns a query object, not a search string
           , search = $location.search()
-          , params
-          ;
+          , params;
 
       // check to see if the path already ends in '/'
       if (path[path.length - 1] === '/') {
@@ -7262,7 +7248,7 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
       return {
           'responseError': function(response) {
               if(response.status === 401 || response.status === 403) {
-                  $location.path('/login');
+                $location.path('/login');
               }
               return $q.reject(response);
           }
