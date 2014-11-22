@@ -77,7 +77,6 @@ module.exports = {
 
   localStrategy: new LocalStrategy(
     function(username, password, done) {
-
       var user = module.exports.findByUsername(username);
 
       if (!user) {
@@ -101,7 +100,6 @@ module.exports = {
 
   deserializeUser: function(id, done) {
     var user = module.exports.findById(id);
-
     if (user) {
       done(null, user);
     } else {

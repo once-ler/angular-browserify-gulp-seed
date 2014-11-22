@@ -6,6 +6,8 @@ var config  = require('./gulp/config')
 , http = require('http')
 , passport = require('passport')
 , morgan  = require('morgan')
+, bodyParser =      require('body-parser')
+, methodOverride =  require('method-override')
 , cookieParser = require('cookie-parser')
 , cookieSession = require('cookie-session')
 , session = require('express-session')
@@ -37,6 +39,11 @@ app.set('views', __dirname + '/server/views');
 // ex: res.render('users.html').
 app.set('view engine', 'html');
 
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(methodOverride());
+
 app.use(express.static(path.join(__dirname, 'public/dist')));
 app.use(express.static(path.join(__dirname, 'server/public')));
 
@@ -56,7 +63,6 @@ var csrfValue = function(req) {
     || (req.query && req.query._csrf)
     || (req.headers['x-csrf-token'])
     || (req.headers['x-xsrf-token']);
-    console.log(token)
   return token;
 };
 

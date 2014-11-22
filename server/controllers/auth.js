@@ -33,7 +33,8 @@ module.exports = {
         return next(err);
       }
       if (!user) {
-        return res.send(400);
+        //return res.send(400);
+        return res.sendStatus(400)
       }
 
 
