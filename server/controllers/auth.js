@@ -37,7 +37,6 @@ module.exports = {
         return res.sendStatus(400)
       }
 
-
       req.logIn(user, function(err) {
         if (err) {
           return next(err);

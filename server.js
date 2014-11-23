@@ -40,8 +40,8 @@ app.set('views', __dirname + '/server/views');
 app.set('view engine', 'html');
 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+var urlencodedParser = app.use(bodyParser.urlencoded({extended: true}));
+var jsonParser = app.use(bodyParser.json());
 app.use(methodOverride());
 
 app.use(express.static(path.join(__dirname, 'public/dist')));
@@ -77,6 +77,9 @@ var csrfValue = function(req) {
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(User.localStrategy);
+
+passport.serializeUser(User.serializeUser);
+passport.deserializeUser(User.deserializeUser);
 
 require('./server/routes.js')(app);
 

@@ -89,7 +89,7 @@ var routes = [
   
 ];
 
-module.exports = function(app) {
+module.exports = function(app, options) {
 
   _.each(routes, function(route) {
     route.middleware.unshift(ensureAuthorized);
