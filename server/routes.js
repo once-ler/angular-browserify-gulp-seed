@@ -59,6 +59,7 @@ var routes = [
       res.render('login', {
         //token: req.cookies['XSRF-TOKEN'],
         token: req.csrfToken(),
+        _redirect: req.query._redirect,
         message: ""
       });
     }]

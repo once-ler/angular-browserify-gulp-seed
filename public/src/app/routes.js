@@ -26,6 +26,21 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
       templateUrl: '404.html'
   });
 
+  // Anonymous routes
+  /*
+  $stateProvider
+  .state('anon', {
+      abstract: true,
+      template: "<ui-view/>",
+      data: {
+          access: access.anon
+      }
+  })
+  .state('anon.login', {
+      url: '/login/'
+  });
+  */
+
   $urlRouterProvider.otherwise('/hello');
 
   // FIX for trailing slashes. Gracefully "borrowed" from https://github.com/angular-ui/ui-router/issues/50
@@ -62,7 +77,8 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
       return {
           'responseError': function(response) {
               if(response.status === 401 || response.status === 403) {
-                $location.path('/login');
+                //$location.path('/login');
+                window.location.href = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/login?_redirect=/';
               }
               return $q.reject(response);
           }

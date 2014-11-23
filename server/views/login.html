@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <!--
     <meta name="csrf-token" content="<%=token%>">
+    -->
 
     <title>Please Login</title>
 
@@ -38,7 +40,8 @@
       <div class="text-vertical-center">
           <p class="form-title">Sign In</p>
           <form class="login" method="post" action="/login">
-              <input(type='hidden', name='_csrf', value=<%=token%>/>
+              <input type='hidden', name='_csrf', value=<%=token%>/>
+              <input type='hidden', name='_redirect', value=<%=_redirect%>/>
               <input type="text" placeholder="Username" name="username" id="login" autocomplete="off"/>
               <input type="password" placeholder="Password" name="password" id="pass" autocomplete="off"/>
               <input type="submit" value="Sign In" class="btn btn-success btn-sm" />
@@ -53,16 +56,17 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
   <script>
+  /*
   var CSRF_HEADER = 'X-CSRF-Token';
-
   var setCSRFToken = function(securityToken) {
     $.ajaxPrefilter(function(options, _, xhr) {
       if ( !xhr.crossDomain ) 
           xhr.setRequestHeader(CSRF_HEADER, securityToken);
     });
   };
-
   setCSRFToken($('meta[name="csrf-token"]').attr('content'));
+  */
+
   /******* EDIT THIS SECTION *******/
 
   $('#form-login').submit(function(event)

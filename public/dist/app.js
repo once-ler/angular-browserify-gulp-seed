@@ -7141,7 +7141,7 @@ module.exports = app;
  * @ngInject
  */
 //function OnRun($rootScope, AppSettings) {
-function OnRun($rootScope, $state, Auth) {
+function OnRun($rootScope, $state, $location, Auth) {
   // change page title based on state
   /*
   $rootScope.$on('$stateChangeSuccess', function(event, toState) {
@@ -7172,15 +7172,18 @@ function OnRun($rootScope, $state, Auth) {
               } else {
                   $rootScope.error = null;
                   //hack to leave app
-                  window.location.href = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/login'; 
                   //$state.go('anon.login');
+                  //$location.path('/login');
+                  var rdir = encodeURIComponent($location.url());
+                  window.location.href = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/login?_redirect=' + rdir; 
+                  //window.location.href = $location.protocol() + '//' + $location.host() + ':' + $location.port() + '/login?_redirect'' + rdir;
               }
           //}
       }
   });
 
 }
-OnRun.$inject = ["$rootScope", "$state", "Auth"];
+OnRun.$inject = ["$rootScope", "$state", "$location", "Auth"];
 
 module.exports = OnRun;
 },{}],"c:\\cygwin64\\home\\htao\\angular-browserify-gulp-seed\\public\\src\\app\\routes.js":[function(require,module,exports){
@@ -7211,6 +7214,21 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
       url: '/404/',
       templateUrl: '404.html'
   });
+
+  // Anonymous routes
+  /*
+  $stateProvider
+  .state('anon', {
+      abstract: true,
+      template: "<ui-view/>",
+      data: {
+          access: access.anon
+      }
+  })
+  .state('anon.login', {
+      url: '/login/'
+  });
+  */
 
   $urlRouterProvider.otherwise('/hello');
 
@@ -7248,7 +7266,8 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
       return {
           'responseError': function(response) {
               if(response.status === 401 || response.status === 403) {
-                $location.path('/login');
+                //$location.path('/login');
+                window.location.href = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/login?_redirect=/';
               }
               return $q.reject(response);
           }

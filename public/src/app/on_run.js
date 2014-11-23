@@ -4,7 +4,7 @@
  * @ngInject
  */
 //function OnRun($rootScope, AppSettings) {
-function OnRun($rootScope, $state, Auth) {
+function OnRun($rootScope, $state, $location, Auth) {
   // change page title based on state
   /*
   $rootScope.$on('$stateChangeSuccess', function(event, toState) {
@@ -35,8 +35,11 @@ function OnRun($rootScope, $state, Auth) {
               } else {
                   $rootScope.error = null;
                   //hack to leave app
-                  window.location.href = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/login'; 
                   //$state.go('anon.login');
+                  //$location.path('/login');
+                  var rdir = encodeURIComponent($location.url());
+                  window.location.href = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/login?_redirect=' + rdir; 
+                  //window.location.href = $location.protocol() + '//' + $location.host() + ':' + $location.port() + '/login?_redirect'' + rdir;
               }
           //}
       }
