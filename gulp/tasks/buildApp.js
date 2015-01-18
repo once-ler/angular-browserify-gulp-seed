@@ -26,8 +26,8 @@ gulp.task('build-app', function () {
     // generate source maps in non-production environment
     //debug: !!production
   //});
-  var b = browserify({
-    entries: config.browserify.entries,
+  var b = browserify(config.browserify.entries, {
+    //entries: config.browserify.entries,
     cache: {},
     packageCache: {},
     fullPaths: true,
@@ -68,6 +68,7 @@ gulp.task('build-app', function () {
       .pipe(gulpif(!!production, streamify(uglify()))) //test uglify, force true
       .pipe(gulp.dest(config.dist.root))
       .pipe(browserSync.reload({ stream: true, once: true }));
+    
     /*
     stream
       .on('error', handleErrors)
@@ -85,6 +86,7 @@ gulp.task('build-app', function () {
 
     return stream;
     */
+    
   }
 
   return rebundle();

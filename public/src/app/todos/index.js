@@ -3,7 +3,7 @@
 //require('es5-shim');
 //require('es5-sham');
 
-require('jquery');
+//require('jquery');
 require('angular');
 require('angular-ui-router')
 

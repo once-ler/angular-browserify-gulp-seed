@@ -52,7 +52,6 @@
     "vinyl-sourcemaps-apply": "latest",
     "lodash": "^2.4.1",
     "source-map": "latest",
-    "less": "~2.2.0",
     "gulp-util": "^3.0.0",
     "bower-resolve": "^2.2.0",
     "browser-sync": "^1.3.5",

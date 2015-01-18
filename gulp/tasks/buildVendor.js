@@ -33,9 +33,11 @@ gulp.task('build-vendor', function () {
 
     var resolvedPath = bowerResolve.fastReadSync(id);
     
-    //var fstream = fs.createReadStream(resolvedPath);
-    //resolvedPath
-    //b.require(fstream, {
+    //dumb hack to make this work in Windows; works as is in Linux
+    if (process.env.OS.search(/windows/i) != -1){
+      resolvedPath = '.'+resolvedPath.replace(process.cwd(), '').replace(/\\/g,'/');
+    }
+    
     b.require(resolvedPath, {
 
       // exposes the package id, so that we can require() from our code.
