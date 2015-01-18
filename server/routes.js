@@ -12,7 +12,7 @@ var routes = [
   // Partials will be handled by angular templateCache
   // Views will be handled by ejs
   // Views
-  /*
+  
   {
       path: '/views/*',
       httpMethod: 'GET',
@@ -21,8 +21,7 @@ var routes = [
           res.render(requestedView);
       }]
   },
-  */
-
+  
   // Local Auth
   {
     path: '/register',

@@ -32,10 +32,11 @@ gulp.task('build-vendor', function () {
   multiBundlesHelper.getBowerPackageIds().forEach(function (id) {
 
     var resolvedPath = bowerResolve.fastReadSync(id);
-    var fstream = fs.createReadStream(resolvedPath);
+    
+    //var fstream = fs.createReadStream(resolvedPath);
     //resolvedPath
-    b.require(fstream, {
-    //b.require(resolvedPath, {
+    //b.require(fstream, {
+    b.require(resolvedPath, {
 
       // exposes the package id, so that we can require() from our code.
       // for eg:
