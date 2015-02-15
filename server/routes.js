@@ -13,14 +13,15 @@ var routes = [
   // Views will be handled by ejs
   // Views
   
+    // Views
   {
-      path: '/views/*',
-      httpMethod: 'GET',
-      middleware: [function (req, res) {
-          var requestedView = path.join('./', req.url);
-          res.render(requestedView);
-      }]
-  },
+    path: '/partials/*',
+    httpMethod: 'GET',
+    middleware: [function(req, res) {
+      var requestedView = path.join('./', req.url);
+      res.render(requestedView);
+        }]
+    },
   
   // Local Auth
   {
@@ -80,10 +81,12 @@ var routes = [
         'username': username,
         'role': role
       }));
+
       res.render('index', {
         title: "EJS as HTML example",
         headline: "Our Angular app 'hello' will be loaded here if all turns out well!!!"
       });
+      
     }]
   }
   

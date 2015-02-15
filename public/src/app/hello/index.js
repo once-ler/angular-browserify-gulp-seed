@@ -33,7 +33,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('hello', {
       url: '/hello',
-      templateUrl: 'hello/home.html',
+      templateUrl: '/partials/hello/home.html',
       controller: 'HomeController',
       data: {
         access: access.public

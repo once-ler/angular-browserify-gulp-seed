@@ -15,64 +15,78 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
   // Public routes
   $stateProvider
   .state('public', {
-      abstract: true,
-      template: "<ui-view/>",
-      data: {
-          access: access.public
-      }
+    abstract: true,
+    template: "<ui-view/>",
+    data: {
+        access: access.public
+    }
   })
   .state('public.404', {
-      url: '/404/',
-      templateUrl: '404.html'
+    url: '/404/',
+    templateUrl: '404.html'
   });
 
   // Anonymous routes
-  /*
   $stateProvider
-  .state('anon', {
+    .state('anon', {
       abstract: true,
       template: "<ui-view/>",
       data: {
-          access: access.anon
+        access: access.anon
       }
-  })
-  .state('anon.login', {
-      url: '/login/'
-  });
-  */
+    })
+    .state('anon.login', {
+      url: '/login/',
+      templateUrl: '/partials/login.html',
+      controller: 'LoginCtrl'
+    });
 
-  $urlRouterProvider.otherwise('/hello');
+  $urlRouterProvider.otherwise('/404');
 
   // FIX for trailing slashes. Gracefully "borrowed" from https://github.com/angular-ui/ui-router/issues/50
   $urlRouterProvider.rule(function($injector, $location) {
-      if($location.protocol() === 'file')
-          return;
+    if ($location.protocol() === 'file')
+      return;
 
-      var path = $location.path()
+    var path = $location.path()
       // Note: misnomer. This returns a query object, not a search string
-          , search = $location.search()
-          , params;
+      ,
+      search = $location.search(),
+      params;
 
-      // check to see if the path already ends in '/'
-      if (path[path.length - 1] === '/') {
-          return;
-      }
+    // check to see if the path already ends in '/'
+    if (path[path.length - 1] === '/') {
+      return;
+    }
 
-      // If there was no search string / query params, return with a `/`
-      if (Object.keys(search).length === 0) {
-          return path + '/';
-      }
+    // If there was no search string / query params, return with a `/`
+    if (Object.keys(search)
+      .length === 0) {
+      return path + '/';
+    }
 
-      // Otherwise build the search string and return a `/?` prefix
-      params = [];
-      angular.forEach(search, function(v, k){
-          params.push(k + '=' + v);
-      });
-      return path + '/?' + params.join('&');
+    // Otherwise build the search string and return a `/?` prefix
+    params = [];
+    angular.forEach(search, function(v, k) {
+      params.push(k + '=' + v);
+    });
+    return path + '/?' + params.join('&');
   });
 
-  $locationProvider.html5Mode(false);
+  $locationProvider.html5Mode(true);
 
+  $httpProvider.interceptors.push(function($q, $location) {
+    return {
+      'responseError': function(response) {
+        if (response.status === 401 || response.status === 403) {
+          $location.path('/login');
+        }
+        return $q.reject(response);
+      }
+    };
+  });
+  
+  /**
   $httpProvider.interceptors.push(function($q, $location) {
       return {
           'responseError': function(response) {
@@ -84,7 +98,7 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
           }
       };
   });
-
+  **/
 }
 
 module.exports = Routes;

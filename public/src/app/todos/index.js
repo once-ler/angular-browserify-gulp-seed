@@ -24,7 +24,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('todos', {
       url: '/todos',
-      templateUrl: 'todos/todos.html',
+      templateUrl: '/partials/todos/todos.html',
       controller: 'TodoCtrl',
       data: {
         access: access.public
@@ -33,7 +33,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     //Testing authorization
     .state('imprint', {
       url: '/imprint',
-      templateUrl: 'todos/imprint.html',
+      templateUrl: '/partials/todos/imprint.html',
       controller: 'ImprintCtrl',
       data: {
         access: access.user

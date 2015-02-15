@@ -6,7 +6,8 @@ module.exports = {
 
   'styles': {
     'src' : 'public/less/app.less',
-    'dest': 'public/dist/css'
+    'dest': 'public/dist/css',
+    'destName': new Date().setHours(0,0,0,0) + '-app.css'
   },
 
   'scripts': {
@@ -34,8 +35,8 @@ module.exports = {
 
   'browserify': {
     'entries'   : ['./public/src/app/index.js'],
-    'bundleName': 'app.js',
-    'vendorBundleName': 'vendor.js'
+    'bundleName': new Date().setHours(0,0,0,0) + '-app.js',
+    'vendorBundleName': new Date().setHours(0,0,0,0) + '-vendor.js'
   }
 
 };

@@ -5,6 +5,7 @@
  */
 //function OnRun($rootScope, AppSettings) {
 function OnRun($rootScope, $state, $location, Auth) {
+  
   // change page title based on state
   /*
   $rootScope.$on('$stateChangeSuccess', function(event, toState) {
@@ -29,6 +30,16 @@ function OnRun($rootScope, $state, $location, Auth) {
           $rootScope.error = "Seems like you tried accessing a route you don't have access to...";
           event.preventDefault();
 
+          if (fromState.url === '^') {
+            if (Auth.isLoggedIn()) {
+              $state.go('user.home');          
+            } else {
+              $rootScope.error = null;
+              $state.go('anon.login');
+            }
+          }
+
+          /**
           //if(fromState.url === '^') {
               if(Auth.isLoggedIn()) {
                   $state.go('user.home');
@@ -42,6 +53,7 @@ function OnRun($rootScope, $state, $location, Auth) {
                   //window.location.href = $location.protocol() + '//' + $location.host() + ':' + $location.port() + '/login?_redirect'' + rdir;
               }
           //}
+          **/
       }
   });
 

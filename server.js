@@ -32,7 +32,8 @@ app.use(morgan('dev'));
 app.engine('.html', require('ejs').__express);
 
 // Optional since express defaults to CWD/views
-app.set('views', __dirname + '/server/views');
+//app.set('views', __dirname + '/server/views');
+app.set('views', __dirname + '/public/dist');
 
 // Without this you would need to
 // supply the extension to res.render()
@@ -44,8 +45,9 @@ var urlencodedParser = app.use(bodyParser.urlencoded({extended: true}));
 var jsonParser = app.use(bodyParser.json());
 app.use(methodOverride());
 
+//app.use(express.static(path.join(__dirname, 'public/dist')));
+//app.use(express.static(path.join(__dirname, 'server/public')));
 app.use(express.static(path.join(__dirname, 'public/dist')));
-app.use(express.static(path.join(__dirname, 'server/public')));
 
 app.use(cookieParser());
 app.use(session(
