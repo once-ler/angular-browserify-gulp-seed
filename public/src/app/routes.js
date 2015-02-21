@@ -35,10 +35,26 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
         access: access.anon
       }
     })
+    /*
     .state('anon.login', {
       url: '/login/',
       templateUrl: '/partials/login.html',
       controller: 'LoginCtrl'
+    });
+    */
+    
+  // Regular user routes
+    $stateProvider
+    .state('user', {
+      abstract: true,
+      template: "<ui-view/>",
+      data: {
+          access: access.user
+      }
+    })
+    .state('user.home', {
+      url: '/',
+      templateUrl: '/partials/home/home.html'
     });
 
   $urlRouterProvider.otherwise('/404');

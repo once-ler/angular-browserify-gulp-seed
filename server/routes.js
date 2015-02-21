@@ -64,10 +64,10 @@ var routes = [
       });
     }]
   },  
-
-  // All other get requests should be handled by AngularJS's client-side routing system
+/**
+  //default i.e.index.html
   {
-    path: '/*',
+    path: '/',
     httpMethod: 'GET',
     middleware: [function(req, res) {
 
@@ -86,6 +86,33 @@ var routes = [
         title: "EJS as HTML example",
         headline: "Our Angular app 'hello' will be loaded here if all turns out well!!!"
       });
+      
+    }]
+  },
+**/
+  // All other get requests should be handled by AngularJS's client-side routing system
+  {
+    path: '/*',
+    httpMethod: 'GET',
+    middleware: [function(req, res) {
+
+      console.log(req.url);
+
+      var role = userRoles.public,
+        username = '';
+      if (req.user) {
+        role = req.user.role;
+        username = req.user.username;
+      }
+      res.cookie('user', JSON.stringify({
+        'username': username,
+        'role': role
+      }));
+      
+      res.render('index', {
+        title: "EJS as HTML example",
+        headline: "Our Angular app 'hello' will be loaded here if all turns out well!!!"
+      });      
       
     }]
   }

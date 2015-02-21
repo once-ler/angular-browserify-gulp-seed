@@ -8,6 +8,7 @@ require('./templates');
 var testModule = require('./hello');
 var todosModule = require('./todos');
 var authModule = require('./auth');
+var loginModule = require('./login');
 
 // create and bootstrap application
 angular.element(document).ready(function() {
@@ -17,7 +18,8 @@ angular.element(document).ready(function() {
     'templates',
     testModule.name,
     todosModule.name,
-    authModule.name
+    authModule.name,
+    loginModule.name
   ];
 
   // mount on window for testing
