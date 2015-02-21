@@ -13,14 +13,14 @@ var routes = [
   // Views will be handled by ejs
   // Views
   
-    // Views
+  // Views
   {
     path: '/partials/*',
     httpMethod: 'GET',
     middleware: [function(req, res) {
-      var requestedView = path.join('./', req.url);
-      res.render(requestedView);
-        }]
+        var requestedView = path.join('./', req.url);
+        res.render(requestedView, {title: "EJS as HTML example",});
+      }]
     },
   
   // Local Auth
@@ -46,6 +46,7 @@ var routes = [
     accessLevel: accessLevels.admin
   },
 
+  /**
   // login
   {
     path: '/login',
@@ -56,14 +57,16 @@ var routes = [
       //csrf token was previously set by middleware
       //Reset
       //res.cookie('XSRF-TOKEN', req.csrfToken());
-      res.render('login', {
+      res.render('partials/login/login', {
         //token: req.cookies['XSRF-TOKEN'],
         token: req.csrfToken(),
         _redirect: req.query._redirect,
         message: ""
       });
     }]
-  },  
+  },
+  **/
+
 /**
   //default i.e.index.html
   {

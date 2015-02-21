@@ -35,13 +35,12 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
         access: access.anon
       }
     })
-    /*
-    .state('anon.login', {
-      url: '/login/',
-      templateUrl: '/partials/login.html',
-      controller: 'LoginCtrl'
+    .state('anon.home', {
+      url: '/',
+      templateUrl: '/partials/hello/home.html',
+      controller: 'HomeController'
     });
-    */
+    
     
   // Regular user routes
     $stateProvider
@@ -52,10 +51,12 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
           access: access.user
       }
     })
+    /**
     .state('user.home', {
       url: '/',
-      templateUrl: '/partials/home/home.html'
+      templateUrl: '/partials/todos/todos.html'
     });
+    **/
 
   $urlRouterProvider.otherwise('/404');
 

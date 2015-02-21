@@ -24,7 +24,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('anon.login', {
       url: '/login/',
-      templateUrl: '/partials/login/login.html',
+      templateUrl: '/partials/login/login.html', //allow the template from express views
       controller: 'LoginCtrl'
     }
   );

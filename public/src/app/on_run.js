@@ -32,10 +32,10 @@ function OnRun($rootScope, $state, $location, Auth) {
 
           if (fromState.url === '^') {
             if (Auth.isLoggedIn()) {
-              $state.go('user.home');          
+              $state.go('todos');          
             } else {
               $rootScope.error = null;
-              $state.go('anon.login');
+              $state.go('anon.home');
             }
           }
 
