@@ -33,7 +33,7 @@ app.engine('.html', require('ejs').__express);
 
 // Optional since express defaults to CWD/views
 //app.set('views', __dirname + '/server/views');
-app.set('views', __dirname + '/public/dist');
+app.set('views', __dirname + '/public/dist/views');
 
 // Without this you would need to
 // supply the extension to res.render()

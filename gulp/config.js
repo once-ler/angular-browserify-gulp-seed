@@ -22,11 +22,11 @@ module.exports = {
 
   'views': {
     'watch': [
-      'public/index.html',
-      'public/partials/**/*.html'
+      'public/views/index.html',
+      'public/views/partials/**/*.html'
     ],
-    'src': 'public/partials/**/*.html',
-    'dest': 'public/dist'
+    'src': 'public/views/**/*.html',
+    'dest': 'public/dist/views'
   },
 
   'dist': {

@@ -19,7 +19,7 @@ var routes = [
     httpMethod: 'GET',
     middleware: [function(req, res) {
         var requestedView = path.join('./', req.url);
-        res.render(requestedView, {title: "EJS as HTML example",});
+        res.render(requestedView);
       }]
     },
   
