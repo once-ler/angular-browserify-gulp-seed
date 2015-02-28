@@ -11,6 +11,7 @@ angular.module('app.login.controllers')
           rememberme: $scope.rememberme
         },
         function(res) {
+          console.log('here')
           $location.path('/');
         },
         function(err) {

@@ -25,7 +25,7 @@ gulp.task('views', ['moveViews'], function() {
     .pipe(gulp.dest(config.views.dest));
 
   // Process any other view files from app/views
-  return gulp.src(config.views.src, '!public/views/index.html')
+  return gulp.src(config.views.src+ '/**/*.html')//, '!'+config.dist.root + '/views/index.html')
     .pipe(templateCache({
       standalone: true,
       base: ''
