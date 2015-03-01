@@ -11,8 +11,7 @@ angular.module('app.login.controllers')
           rememberme: $scope.rememberme
         },
         function(res) {
-          console.log('here')
-          $location.path('/');
+          $location.path('/todos');
         },
         function(err) {
           $timeout(function() { $rootScope.error = "Failed to login"; }, 0);

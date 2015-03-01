@@ -7,9 +7,16 @@
     <!-- inject:css -->
     <!-- endinject -->    
 </head>
-<body>
-<div ui-view>
-  <%= headline %>
+<body data-ng-cloak>
+
+<div home-header></div>
+
+<div class="stylish">
+
+  <div data-ui-view class="container-fluid main-content">
+    <%= headline %>
+  </div>
+
 </div>
 <!--
 <script src="vendor.js"></script>
