@@ -11,6 +11,7 @@ module.exports = {
   },
 
   'scripts': {
+    'root': 'public/src/app',
     'src' : 'public/src/app/**/*.js',
     'dest': 'public/dist'
   },

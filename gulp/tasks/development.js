@@ -10,8 +10,9 @@ gulp.task('dev', ['clean'], function(cb) {
   global.isProd = false;
 
   /**
-    browserify runs before views
+    browserify runs AFTER templateCache
+    browserify runs BEFORE views
   **/
-  runSequence('styles', 'images', 'browserify', 'views', 'watch', cb);
+  runSequence('styles', 'images', 'templateCache', 'browserify', 'views', 'watch', cb);
 
 });

@@ -50,14 +50,8 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
       data: {
           access: access.user
       }
-    })
-    /**
-    .state('user.home', {
-      url: '/',
-      templateUrl: '/partials/todos/todos.html'
     });
-    **/
-
+    
   $urlRouterProvider.otherwise('/404');
 
   // FIX for trailing slashes. Gracefully "borrowed" from https://github.com/angular-ui/ui-router/issues/50
@@ -102,20 +96,7 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
       }
     };
   });
-  
-  /**
-  $httpProvider.interceptors.push(function($q, $location) {
-      return {
-          'responseError': function(response) {
-              if(response.status === 401 || response.status === 403) {
-                //$location.path('/login');
-                window.location.href = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/login?_redirect=/';
-              }
-              return $q.reject(response);
-          }
-      };
-  });
-  **/
+ 
 }
 
 module.exports = Routes;

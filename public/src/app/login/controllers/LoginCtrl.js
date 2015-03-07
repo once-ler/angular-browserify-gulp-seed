@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app.login.controllers')
-  .controller('LoginCtrl', function($rootScope, $scope, $location, $timeout, $window, Auth) {
+  .controller('LoginCtrl', function($rootScope, $scope, $location, $timeout, Auth) {
 
     $scope.rememberme = true;
     $scope.login = function() {
@@ -11,7 +11,7 @@ angular.module('app.login.controllers')
           rememberme: $scope.rememberme
         },
         function(res) {
-          $location.path('/todos');
+          $location.path('/home');
         },
         function(err) {
           $timeout(function() { $rootScope.error = "Failed to login"; }, 0);

@@ -4,8 +4,9 @@
 require('angular');
 require('angular-ui-router');
 
-//What is this for again?
-require('./templates');
+var templates = require('./templates');
+var directives = require('./directives');
+var controllers = require('./controllers');
 
 var homeModule = require('./home');
 var testModule = require('./hello');
@@ -18,7 +19,8 @@ angular.element(document).ready(function() {
 
   var requires = [
     'ui.router',
-    'templates',
+    templates.name,
+    directives.name,
     homeModule.name,
     testModule.name,
     todosModule.name,

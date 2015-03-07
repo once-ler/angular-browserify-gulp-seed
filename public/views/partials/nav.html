@@ -1,0 +1,20 @@
+<div data-ng-controller="NavCtrl" class="navbar navbar-fixed-top" style="top:60px;">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <ul class="nav nav-pills">
+        <li data-access-level="accessLevels.user" active-nav><a href="/home">Home</a>
+        </li>
+        <li data-access-level="accessLevels.user" active-nav><a href="/todos">TODOS</a>
+        </li>
+        <li data-access-level="accessLevels.public" active-nav><a href="/hello">Hello World</a>
+        </li>
+        <li data-access-level="accessLevels.anon" active-nav><a href="/login">Login</a>
+        </li>
+        <div id="userInfo" data-access-level="accessLevels.user" class="pull-right">Welcome&nbsp;<strong>{{ user.username }}&nbsp;</strong><span data-ng-class="{&quot;label-info&quot;: user.role.title == userRoles.user.title, &quot;label-success&quot;: user.role.title == userRoles.admin.title}" class="label">{{ user.role.title }}</span>
+          <span data-access-level="accessLevels.user"><a class="btn btn-danger" href="" data-ng-click="logout()">Log out</a>
+        </span>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>

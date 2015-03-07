@@ -6,7 +6,7 @@ require('angular');
 var controllers = module.exports = angular.module('app.hello.controllers', []);
 
 // define MyApp.controllers.HomeController
-controllers.controller('HomeController', function ($scope) {
+controllers.controller('HelloController', function ($scope) {
 
   // A sample controller implementation to show greetings randomly from a list
   $scope.greetings = [

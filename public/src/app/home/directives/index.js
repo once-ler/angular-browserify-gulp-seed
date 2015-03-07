@@ -4,5 +4,5 @@ require('angular')
 
 var app = angular.module('app.home.directives',[]);
 
-app.directive('homeHeader', require('./header'));
+app.directive('homeDirective', require('./home'));
 module.exports = app;
