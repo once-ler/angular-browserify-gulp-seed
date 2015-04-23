@@ -23,4 +23,50 @@ var homeNav = function () {
 app.directive('homeHeader', homeHeader);
 app.directive('homeNav',  homeNav)
 
+/**
+  Add directives for ajax loading effects
+**/
+app.directive('loadingWidget', function (requestNotificationChannel) {
+  return {
+    restrict: "A",
+    link: function (scope, element) {
+      
+      //Add one time
+      element.addClass('loading');
+
+      // hide the element initially
+      element.removeClass('loaded');
+
+      var startRequestHandler = function() {
+        // got the request start notification, show the element
+        element.removeClass('loaded');
+      };
+
+      var endRequestHandler = function() {
+        // got the request start notification, show the element
+        element.addClass('loaded');
+      };
+
+      requestNotificationChannel.onRequestStarted(scope, startRequestHandler);
+
+      requestNotificationChannel.onRequestEnded(scope, endRequestHandler);
+    }
+  };
+});
+
+app.directive('loadingContainer', function() {
+  return {
+    restrict: 'A',
+    scope: false,
+    link: function(scope, element, attrs) {
+      var loadingLayer = angular.element('<div class="loading"></div>');
+      element.append(loadingLayer);
+      element.addClass('loading-container');
+      scope.$watch(attrs.loadingContainer, function(value) {
+        loadingLayer.toggleClass('ng-hide', !value);
+      });
+    }
+  };
+});
+
 module.exports = app;

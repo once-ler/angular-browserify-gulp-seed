@@ -16,9 +16,13 @@ exports.getBowerPackageIds = function () {
   }
   /**
     metro-bootstrap is strictly a less package
+    angular-formly is already commonjs
   **/
-  return _(_.keys(bowerManifest.dependencies)).without('metro-bootstrap') || [];
-
+  return _(_.keys(bowerManifest.dependencies))
+    //Examples depending on your needs
+    //.without('metro-bootstrap','api-check','angular-formly','angular-formly-templates-bootstrap','slickgrid') || [];
+    //.without('metro-bootstrap', 'ngAnimate', 'jquery', 'slickgrid') || [];
+    .without('metro-bootstrap');
 }
 
 exports.getNPMPackageIds = function () {
@@ -29,6 +33,7 @@ exports.getNPMPackageIds = function () {
   } catch (e) {
     // does not have a package.json manifest
   }
-  return _.keys(packageManifest.dependencies) || [];
+  //Again, depending on your needs, feel free to change the without collection
+  return _(_.keys(packageManifest.dependencies)).without('async','mongodb') || [];
 
 }

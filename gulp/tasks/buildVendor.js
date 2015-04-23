@@ -16,7 +16,9 @@ var uglify       = require('gulp-uglify');
 var production = global.isProd; //(process.env.NODE_ENV === 'production');
 var multiBundlesHelper = require('../util/multiBundlesHelper'); 
 
-gulp.task('build-vendor', function () {
+var concat = require('gulp-concat');
+
+gulp.task('browserify-vendor', function () {
 
   // this task will go through ./bower.json and
   // uses bower-resolve to resolve its full path.
@@ -25,6 +27,11 @@ gulp.task('build-vendor', function () {
   var b = browserify({
     // generate source maps in non-production environment
     debug: !!production
+    //https://github.com/formly-js/angular-formly/issues/186
+    //noParse: [
+    //  bowerResolve.fastReadSync('api-check'),
+    //  bowerResolve.fastReadSync('angular-formly'), 
+    //  bowerResolve.fastReadSync('angular-formly-templates-bootstrap')]
   });
 
   // get all bower components ids and use 'bower-resolve' to resolve
@@ -56,6 +63,10 @@ gulp.task('build-vendor', function () {
   });
 
   var stream = b.bundle().pipe(source(config.browserify.vendorBundleName));
+  //var stream = b.bundle().pipe(source('vendor.js'));
+  
+  stream
+    .pipe(gulp.src(config.scripts.concat))
 
   // pipe additional tasks here (for eg: minifying / uglifying, etc)
   // remember to turn off name-mangling if needed when uglifying
@@ -66,3 +77,14 @@ gulp.task('build-vendor', function () {
 
   return stream;
 });
+
+gulp.task('concatJs', function() {
+
+  return gulp.src(config.scripts.concat)
+    .pipe(concat(config.scripts.vendorBundleName))
+    .pipe(gulpif(!!production, streamify(uglify())))
+    .pipe(gulp.dest(config.dist.root));
+
+});
+
+gulp.task('build-vendor', ['browserify-vendor', 'concatJs']);

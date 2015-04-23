@@ -38,7 +38,7 @@ function Routes($stateProvider, $locationProvider, $urlRouterProvider, $httpProv
     .state('anon.home', {
       url: '/',
       templateUrl: '/partials/hello/home.html',
-      controller: 'HomeController'
+      controller: 'HelloController'
     });
     
     

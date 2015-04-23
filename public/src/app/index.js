@@ -7,12 +7,15 @@ require('angular-ui-router');
 var templates = require('./templates');
 var directives = require('./directives');
 var controllers = require('./controllers');
+var services = require('./services');
 
+var httpInterceptorModule = require('./httpInterceptor');
 var homeModule = require('./home');
 var testModule = require('./hello');
 var todosModule = require('./todos');
 var authModule = require('./auth');
 var loginModule = require('./login');
+var snapshot = require('./snapshot');
 
 // create and bootstrap application
 angular.element(document).ready(function() {
@@ -21,11 +24,15 @@ angular.element(document).ready(function() {
     'ui.router',
     templates.name,
     directives.name,
+    controllers.name,
+    directives.name,
+    httpInterceptorModule.name,
     homeModule.name,
     testModule.name,
     todosModule.name,
     authModule.name,
-    loginModule.name
+    loginModule.name,
+    snapshot.name
   ];
 
   // mount on window for testing
