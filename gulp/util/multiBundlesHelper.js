@@ -20,7 +20,7 @@ exports.getBowerPackageIds = function () {
   **/
   return _(_.keys(bowerManifest.dependencies))
     //.without('metro-bootstrap','api-check','angular-formly','angular-formly-templates-bootstrap','slickgrid') || [];
-    .without('metro-bootstrap', 'ngAnimate', 'jquery', 'slickgrid', 'd3', 'crossfilter', 'dcjs') || [];
+    .without('metro-bootstrap', 'ngAnimate', 'jquery', 'slickgrid') || [];
 }
 
 exports.getNPMPackageIds = function () {

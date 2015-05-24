@@ -33,10 +33,7 @@ module.exports = {
     'dest': 'public/dist',
     'concat': [
       'public/src/vendor/jquery/dist/jquery.js',
-      'public/src/vendor/handsontable/dist/handsontable.full.js',
-      'public/src/vendor/d3/d3.js',
-      'public/src/vendor/crossfilter/crossfilter.js',
-      'public/src/vendor/dcjs/dc.js'      
+      'public/src/vendor/handsontable/dist/handsontable.full.js'
     ],
     'vendorBundleName': new Date().setHours(0,0,0,0) + '-non-brfs-vendor.js'
   },
