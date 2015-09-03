@@ -24,6 +24,7 @@
     "angular-ui-router": "~0.2.10",
     "angular-cookies": "~1.2.12",
     "bootstrap": "~3.3.4",
-    "metro-bootstrap": "*"
+    "metro-bootstrap": "*",
+    "material-design-lite": "~1.0.4"
   }
 }

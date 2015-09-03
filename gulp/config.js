@@ -21,6 +21,7 @@ module.exports = {
     'dest': 'public/dist/css',
     'destName': new Date().setHours(0,0,0,0) + '-app.css',
     'concat': [
+      'public/src/vendor/material-design-lite/material.css',
       'public/src/vendor/ngAnimate/css/ng-animation.css',
       'public/src/vendor/angular-ui-select/dist/select.css',
       'public/src/vendor/handsontable/dist/handsontable.full.css'

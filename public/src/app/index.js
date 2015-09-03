@@ -4,6 +4,9 @@
 require('angular');
 require('angular-ui-router');
 
+//require material
+require('material-design-lite');
+
 var templates = require('./templates');
 var directives = require('./directives');
 var controllers = require('./controllers');
@@ -15,7 +18,6 @@ var testModule = require('./hello');
 var todosModule = require('./todos');
 var authModule = require('./auth');
 var loginModule = require('./login');
-var snapshot = require('./snapshot');
 
 // create and bootstrap application
 angular.element(document).ready(function() {
@@ -31,8 +33,7 @@ angular.element(document).ready(function() {
     testModule.name,
     todosModule.name,
     authModule.name,
-    loginModule.name,
-    snapshot.name
+    loginModule.name
   ];
 
   // mount on window for testing
