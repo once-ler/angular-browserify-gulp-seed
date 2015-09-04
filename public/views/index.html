@@ -1,6 +1,7 @@
 <!doctype html>
-<html lang="en" class="mdl-js">
+<html lang="en">
 <head>
+    <base href="/">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title><%= title %></title>
@@ -21,15 +22,19 @@
 </div>
 -->
 
+<!--
 <div home-header></div>
+-->
 
-<!-- Navigation with authorization -->
-<div home-nav></div>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-<div class="stylish" mdl-layout__container>
+  <!-- Navigation with authorization -->
+  <div home-nav></div>
+  
+  <main class="stylish" class="mdl-layout__content" style="top:55px;">
+    <div data-ui-view class="page-content"><%= headline %></div>
+  </main>
 
-  <div>
-    <%= headline %>
   </div>
 
 </div>

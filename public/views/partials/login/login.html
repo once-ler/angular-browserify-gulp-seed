@@ -9,6 +9,7 @@
 <hr/>
 -->
 
+<!--
 <div class="text-vertical-center">
     <p class="form-title">Sign In</p>
     <form class="login" ng-submit="login()">
@@ -17,6 +18,32 @@
         <input type="submit" value="Sign In" class="btn btn-success btn-sm" />
     </form>
 </div>
+-->
+<!--
+<h3 class="mdl-typography--text-center">Sign In</h3>
+-->
+<form ng-submit="login()">
+    <div class="mdl-cell--12-col mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet">&nbsp;</div>
+        <div class="mdl-grid mdl-cell--4-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-cell-12-col mdl-cell--8-col-tablet">
+                <input class="mdl-textfield__input mdl-color-text--pink-200" type="text" id="login" autocomplete="off" data-ng-model="username"/>
+                <label class="mdl-textfield__label" for="username">Username</label>
+            </div>
+
+            <div class="mdl-textfield mdl-js-textfield mdl-cell-12-col mdl-cell--8-col-tablet">
+                <input class="mdl-textfield__input mdl-color-text--pink-200" type="password" id="pass" autocomplete="off" data-ng-model="password" />
+                <label class="mdl-textfield__label" for="password">Password</label>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet">&nbsp;</div>
+        </form>
+    </div>
+    <div style="text-align:center;">
+    <input type="submit" value="Sign In" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" style="font-size:24px;"/>
+    </div>
+</form>
+
 <!--
 <form ng-submit="login()" name="loginForm" role="form" class="form-horizontal">
     <div class="form-group">

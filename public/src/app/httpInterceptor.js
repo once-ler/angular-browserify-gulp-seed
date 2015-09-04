@@ -37,16 +37,38 @@ app.config(['$httpProvider', function($httpProvider) {
         return $q.reject(response);
       }
 
-      return function(promise) {
+      //return function(promise) {
+      function notUsed(promise) {
+
         // get requestNotificationChannel via $injector because of circular dependency problem
         notificationChannel = notificationChannel || $injector.get('requestNotificationChannel');
         // send a notification requests are complete
         notificationChannel.requestStarted();
         return promise.then(success, error);
       }
-        }];
 
-  $httpProvider.responseInterceptors.push(interceptor);
+      function request(config){
+        // get requestNotificationChannel via $injector because of circular dependency problem
+        notificationChannel = notificationChannel || $injector.get('requestNotificationChannel');
+        // send a notification requests are complete
+        notificationChannel.requestStarted();
+
+        return config;
+      }
+
+      //>=1.3
+      return {
+        "requestError": error,
+        "request": request,
+        "response": success
+      };
+
+    }];
+
+  //~1.2
+  //$httpProvider.responseInterceptors.push(interceptor);
+  //>=1.3
+  $httpProvider.interceptors.push(interceptor);
 }]);
 
 app.factory('requestNotificationChannel', ['$rootScope', function($rootScope) {

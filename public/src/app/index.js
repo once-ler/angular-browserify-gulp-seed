@@ -5,7 +5,7 @@ require('angular');
 require('angular-ui-router');
 
 //require material
-require('material-design-lite');
+require('angular-material-design-lite');
 
 var templates = require('./templates');
 var directives = require('./directives');
@@ -24,6 +24,7 @@ angular.element(document).ready(function() {
 
   var requires = [
     'ui.router',
+    'mdl',
     templates.name,
     directives.name,
     controllers.name,

@@ -5,6 +5,8 @@
  */
 function OnRun($rootScope, $state, $location, Auth) {
   
+  //componentHandler.upgradeAllRegistered();
+
   $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
       
     if(!('data' in toState) || !('access' in toState.data)){
