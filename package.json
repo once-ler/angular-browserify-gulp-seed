@@ -93,6 +93,7 @@
     "vinyl-source-stream": "^0.1.1",
     "vinyl-sourcemaps-apply": "latest",
     "vinyl-transform": "0.0.1",
-    "watchify": "~2.1.0"
+    "watchify": "~2.1.0",
+    "gulp-sass": "~2.0.4"
   }
 }

@@ -2,7 +2,8 @@
 
 var config       = require('../config');
 var gulp         = require('gulp');
-var less = require('gulp-less');  
+//var less = require('gulp-less');
+var sass = require('gulp-sass');  
 var path = require('path');
 var gulpif       = require('gulp-if');
 var handleErrors = require('../util/handleErrors');
@@ -11,6 +12,20 @@ var rename = require("gulp-rename");
 var del    = require('del');
 var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
+
+gulp.task('processScss', function() {
+  return gulp.src(config.styles.src)
+    .pipe(sass({
+      errLogToConsole: true,
+      sourceMap: 'sass',
+      sourceComments: 'map',
+      precision: 10,
+      //imagePath: 'assets/img',
+    }))
+    .on('error', handleErrors)
+    .pipe(gulp.dest(config.styles.dest))
+    .pipe(gulpif(browserSync.active, browserSync.reload({ stream: true })));
+});
 
 gulp.task('processLess', function() {
   return gulp.src(config.styles.src)
@@ -40,5 +55,5 @@ gulp.task('cleanCss', function(){
 });
 
 gulp.task('styles', function (cb) {    
-  runSequence('processLess', 'concatCss', 'renameCss', 'cleanCss', cb);
+  runSequence('processScss', 'concatCss', 'renameCss', 'cleanCss', cb);
 });

@@ -1,0 +1,83 @@
+/**
+ * This is the main application stylesheet. It should include or import all
+ * stylesheets used throughout the application as this is the only stylesheet in
+ * the Grunt configuration that is automatically processed.
+ */
+
+
+/**
+ * First, we include the Twitter Bootstrap LESS files. Only the ones used in the
+ * project should be imported as the rest are just wasting space.
+ */
+/*
+/* Material Design Lite */
+
+/*
+  cd ~/angular-browserify-gulp-seed/public/src/vendor/material-deisgn-lite
+  npm install && npm install -g gulp
+  gulp all && gulp server
+*/
+
+/**
+ * This is our main variables file. It in turn imports the `variables` file from
+ * Twitter Bootstrap. We must include it last so we can overwrite any variable
+ * definitions in our imported stylesheets.
+ */
+
+@import 'variables.scss';
+
+// Variables and mixins
+//@import "../src/vendor/material-design-lite/src/_variables.scss";
+@import "../src/vendor/material-design-lite/src/_mixins.scss";
+
+// Resets and dependencies
+@import "../src/vendor/material-design-lite/src/resets/resets";
+@import "../src/vendor/material-design-lite/src/typography/typography";
+
+// Components
+@import "../src/vendor/material-design-lite/src/palette/palette";
+@import "../src/vendor/material-design-lite/src/ripple/ripple";
+@import "../src/vendor/material-design-lite/src/animation/animation";
+@import "../src/vendor/material-design-lite/src/badge/badge";
+@import "../src/vendor/material-design-lite/src/button/button";
+@import "../src/vendor/material-design-lite/src/card/card";
+@import "../src/vendor/material-design-lite/src/checkbox/checkbox";
+@import "../src/vendor/material-design-lite/src/data-table/data-table";
+@import "../src/vendor/material-design-lite/src/footer/mega_footer";
+@import "../src/vendor/material-design-lite/src/footer/mini_footer";
+@import "../src/vendor/material-design-lite/src/icon-toggle/icon-toggle";
+@import "../src/vendor/material-design-lite/src/menu/menu";
+@import "../src/vendor/material-design-lite/src/progress/progress";
+@import "../src/vendor/material-design-lite/src/layout/layout";
+@import "../src/vendor/material-design-lite/src/radio/radio";
+@import "../src/vendor/material-design-lite/src/slider/slider";
+@import "../src/vendor/material-design-lite/src/spinner/spinner";
+@import "../src/vendor/material-design-lite/src/switch/switch";
+@import "../src/vendor/material-design-lite/src/tabs/tabs";
+@import "../src/vendor/material-design-lite/src/textfield/textfield";
+@import "../src/vendor/material-design-lite/src/tooltip/tooltip";
+@import "../src/vendor/material-design-lite/src/shadow/shadow";
+@import "../src/vendor/material-design-lite/src/grid/grid";
+
+/**
+ * Now that all app-wide styles have been applied, we can load the styles for
+ * all the submodules and components we are using. 
+ *
+ * TODO: In a later version of this boilerplate, I'd like to automate this.
+ */
+
+@import 'home/home.scss';
+@import 'home/login.scss';
+@import 'home/footer.scss';
+@import 'home/header.scss';
+@import 'home/pattern.scss';
+@import 'home/httpInterceptor.scss';
+
+/*
+@import 'home/xl';
+@import 'home/shadow';
+@import 'angular-scroll/angular-scroll';
+@import 'json-human/json-human';
+@import 'snapshot/snapshot';
+@import 'dcf/dcf';
+*/

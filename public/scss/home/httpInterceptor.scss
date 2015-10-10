@@ -1,0 +1,13 @@
+.loading {
+    opacity: 0.3;
+    
+    -webkit-transition: opacity 0.25s ease-in;
+       -moz-transition: opacity 0.25s ease-in;
+        -ms-transition: opacity 0.25s ease-in;
+         -o-transition: opacity 0.25s ease-in;
+            transition: opacity 0.25s ease-in;
+}
+
+.loaded {
+    opacity: 1;
+}
