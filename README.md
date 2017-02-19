@@ -9,7 +9,7 @@ angular-browserify-gulp-seed
 - [x] Authentication and authorization modules for angular.
 - [x] Best practice directory structure for angular and gulp.
 - [x] Material Design Lite and SCSS.
-- [x] Updated to ES6.
+- [x] Updated to ES6 for front-end.
 
 ##Directory by Feature and Type Hybrid
 
