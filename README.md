@@ -1,16 +1,77 @@
 angular-browserify-gulp-seed
 ============================
 
-##Finally, a boilerplate I'm going to use (In progress).
+####Boilerplate for Angular 1.3x
 
-####My wishlist:
-  + **_Separate app & vendor files_** 
-    + app and vendor files need to be bundled separately for faster refreshes since vendor bundle don't change often
-  + **_nodemon_** 
-    + include nodemon so we can watch for changes in express and middleware
-  + **_security_**
-    + must include anthentication **_and_** authorization modules for angular
-  + **_best practice_**
-    + best practice directory structure for angular and gulp
-  + **_bootstrap_**
-    + should look good out of the box
+##Features
+- [x] App and vendor files bundled separately for faster refreshes since vendor bundle don't change often.
+- [x] Include nodemon so we can watch for changes in express and middleware.
+- [x] Authentication and authorization modules for angular.
+- [x] Best practice directory structure for angular and gulp.
+- [x] Material Design Lite and SCSS.
+
+##Directory by Feature and Type Hybrid
+
+###Structure
+
++ **_src/_**
+  + **_app/_**
+    + **_Your First Module_**
+        + index.js
+        + module.js
+        + **_controllers/_**
+        + **_directives/_**
+        + **_partials/_**
+        + **_services/_**
+          + your-service.js
+          + module.js
+          + index.js             
+    + **_auth/_**
+      + index.js
+      + module.js
+      + **_controllers/_**
+        + NavCtrl.js
+        + index.js
+        + module.js
+      + **_directives/_**
+        + accessLevelDirective.js
+        + accessNavDirective.js
+        + alertBox.js
+        + content.js
+        + footer.js
+        + header.js
+        + index.js
+        + module.js
+        + sidebar.js
+      + **_partials/_**
+        + 404.tpl.html
+        + alert-box.tpl.html
+        + content.tpl.html
+        + footer.tpl.html
+        + header.tpl.html
+        + index.tpl.html
+        + notFound.tpl.html
+        + sidebar.tpl.html
+        + index.js
+      + **_services/_**
+        + authService.js
+        + userService.js
+        + index.js
+        + module.js
+    + **_Your Next Module_**
+        + index.js
+        + module.js
+        + **_controllers/_**
+        + **_directives/_**
+        + **_partials/_**
+        + **_services/_**
+          + your-next-service.js
+          + module.js
+          + index.js 
+    + **_login/_**
+    + **_menu/_**
+    + **_private/_**
+    + **_register/_**
+    + **_user/_**
+  + **_scss/_**
+  + **_img/_**

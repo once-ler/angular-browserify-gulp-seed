@@ -16,6 +16,7 @@ var gulpif       = require('gulp-if');
 var ngAnnotate   = require('browserify-ngannotate');
 var streamify    = require('gulp-streamify');
 var uglify       = require('gulp-uglify');
+var babel = require('babelify');
 
 var production = global.isProd; //(process.env.NODE_ENV === 'production');
 var multiBundlesHelper = require('../util/multiBundlesHelper'); 
@@ -32,7 +33,8 @@ gulp.task('build-app', function () {
     packageCache: {},
     fullPaths: true,
     debug: !!production
-  });
+  })
+  .transform(babel, {presets: ["es2015", "stage-0"]});
 
   if ( !production ) {
     b = watchify(b);

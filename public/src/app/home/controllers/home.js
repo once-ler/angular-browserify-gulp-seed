@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function($scope, HomeService, AnotherHomeService) {
+export default ($scope, HomeService, AnotherHomeService) => {
   HomeService.saySomething();
   AnotherHomeService.saySomething();
 };

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngInject
  */
@@ -7,7 +5,7 @@ function OnRun($rootScope, $state, $location, Auth) {
   
   //componentHandler.upgradeAllRegistered();
 
-  $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+  $rootScope.$on("$stateChangeStart", (event, toState, toParams, fromState, fromParams) => {
       
     if(!('data' in toState) || !('access' in toState.data)){
       $rootScope.error = "Access undefined for this state";
@@ -29,7 +27,7 @@ function OnRun($rootScope, $state, $location, Auth) {
   });
 }
 
-module.exports = OnRun;
+export default OnRun;
 
 /**
   Detect <= IE 10; If it's IE 11, that's OK
@@ -39,12 +37,12 @@ module.exports = OnRun;
   this.device.ie10 = /MSIE 10/i.test(navigator.userAgent);
   this.device.ie11 = /rv:11.0/i.test(navigator.userAgent);
 **/
-(function(){
-  var isIE = (navigator.userAgent.indexOf("MSIE") != -1);
+((() => {
+  const isIE = (navigator.userAgent.indexOf("MSIE") != -1);
   if (isIE) {
     $('#ie-warning').removeClass('hidden');
   }
-})();
+}))();
 
 //http://stackoverflow.com/questions/3326650/console-is-undefined-error-for-internet-explorer
 /**
@@ -57,23 +55,23 @@ module.exports = OnRun;
  * Safari 6.2.4: debug,error,log,info,warn,clear,dir,dirxml,table,trace,assert,count,profile,profileEnd,time,timeEnd,timeStamp,group,groupCollapsed,groupEnd
  * Opera 28.0.1750.48: debug,error,info,log,warn,dir,dirxml,table,trace,assert,count,markTimeline,profile,profileEnd,time,timeEnd,timeStamp,timeline,timelineEnd,group,groupCollapsed,groupEnd,clear
  */
-(function() {
+((() => {
   // Union of Chrome, Firefox, IE, Opera, and Safari console methods
-  var methods = ["assert", "assert", "cd", "clear", "count", "countReset",
+  const methods = ["assert", "assert", "cd", "clear", "count", "countReset",
     "debug", "dir", "dirxml", "dirxml", "dirxml", "error", "error", "exception",
     "group", "group", "groupCollapsed", "groupCollapsed", "groupEnd", "info",
     "info", "log", "log", "markTimeline", "profile", "profileEnd", "profileEnd",
     "select", "table", "table", "time", "time", "timeEnd", "timeEnd", "timeEnd",
     "timeEnd", "timeEnd", "timeStamp", "timeline", "timelineEnd", "trace",
     "trace", "trace", "trace", "trace", "warn"];
-  var length = methods.length;
-  var console = (window.console = window.console || {});
-  var method;
-  var noop = function() {};
+  let length = methods.length;
+  const console = (window.console = window.console || {});
+  let method;
+  const noop = () => {};
   while (length--) {
     method = methods[length];
     // define undefined methods as noops to prevent errors
     if (!console[method])
       console[method] = noop;
   }
-})();
+}))();

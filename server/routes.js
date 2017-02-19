@@ -44,55 +44,7 @@ var routes = [
     httpMethod: 'GET',
     middleware: [UserCtrl.index],
     accessLevel: accessLevels.admin
-  },
-
-  /**
-  // login
-  {
-    path: '/login',
-    httpMethod: 'GET',
-    middleware: [function(req, res) {
-      //res.cookie('XSRF-TOKEN', req.csrfToken());
-      //console.log(res.cookie('XSRF-TOKEN'))
-      //csrf token was previously set by middleware
-      //Reset
-      //res.cookie('XSRF-TOKEN', req.csrfToken());
-      res.render('partials/login/login', {
-        //token: req.cookies['XSRF-TOKEN'],
-        token: req.csrfToken(),
-        _redirect: req.query._redirect,
-        message: ""
-      });
-    }]
-  },
-  **/
-
-/**
-  //default i.e.index.html
-  {
-    path: '/',
-    httpMethod: 'GET',
-    middleware: [function(req, res) {
-
-      var role = userRoles.public,
-        username = '';
-      if (req.user) {
-        role = req.user.role;
-        username = req.user.username;
-      }
-      res.cookie('user', JSON.stringify({
-        'username': username,
-        'role': role
-      }));
-
-      res.render('index', {
-        title: "EJS as HTML example",
-        headline: "Our Angular app 'hello' will be loaded here if all turns out well!!!"
-      });
-      
-    }]
-  },
-**/
+  },  
   // All other get requests should be handled by AngularJS's client-side routing system
   {
     path: '/*',

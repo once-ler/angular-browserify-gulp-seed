@@ -1,8 +1,7 @@
-'use strict';
 require('angular')
 
-var app = angular.module('app.home.controllers',[]);
+const app = angular.module('app.home.controllers',[]);
 
 app.controller('HomeCtrl', require('./home'));
 
-module.exports = app;
+export default app;

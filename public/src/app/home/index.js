@@ -1,19 +1,18 @@
-'use strict';
-
 require('angular');
 require('angular-ui-router')
 
 //Dependents
-var routingConfig = require('../routingConfig');
-var access = routingConfig.accessLevels;
+import routingConfig from '../routingConfig';
 
-var directives = require('./directives');
-var services = require('./services');
-var controllers = require('./controllers');
+const access = routingConfig.accessLevels;
 
-var app = angular.module('app.home', [ 'ui.router', services.name, directives.name, controllers.name ]);
+import directives from './directives';
+import services from './services';
+import controllers from './controllers';
 
-app.config(function ($stateProvider, $urlRouterProvider) {
+const app = angular.module('app.home', [ 'ui.router', services.name, directives.name, controllers.name ]);
+
+app.config(($stateProvider, $urlRouterProvider) => {
   $stateProvider
   .state('user.home', {
     url: '/home',
@@ -25,4 +24,4 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   });
 });
 
-module.exports = app;
+export default app;

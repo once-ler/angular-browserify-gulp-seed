@@ -1,6 +1,6 @@
-(function(exports){
+((exports => {
 
-    var config = {
+    const config = {
 
         /* List all the roles you wish to use in the app
         * You have a max of 31 before the bit shift pushes the accompanying integer out of
@@ -26,7 +26,7 @@
             'admin': ['admin']
         }
 
-    }
+    };
 
     exports.userRoles = buildRoles(config.roles);
     exports.accessLevels = buildAccessLevels(config.accessLevels, exports.userRoles);
@@ -39,11 +39,11 @@
 
     function buildRoles(roles){
 
-        var bitMask = "01";
-        var userRoles = {};
+        let bitMask = "01";
+        const userRoles = {};
 
-        for(var role in roles){
-            var intCode = parseInt(bitMask, 2);
+        for(const role in roles){
+            const intCode = parseInt(bitMask, 2);
             userRoles[roles[role]] = {
                 bitMask: intCode,
                 title: roles[role]
@@ -60,8 +60,8 @@
      */
     function buildAccessLevels(accessLevelDeclarations, userRoles){
 
-        var accessLevels = {};
-        for(var level in accessLevelDeclarations){
+        const accessLevels = {};
+        for(const level in accessLevelDeclarations){
 
             if(typeof accessLevelDeclarations[level] == 'string'){
                 if(accessLevelDeclarations[level] == '*'){
@@ -76,7 +76,7 @@
                         bitMask: parseInt(resultBitMask, 2)
                     };
                 }
-                else console.log("Access Control Error: Could not parse '" + accessLevelDeclarations[level] + "' as access definition for level '" + level + "'")
+                else console.log(`Access Control Error: Could not parse '${accessLevelDeclarations[level]}' as access definition for level '${level}'`)
 
             }
             else {
@@ -85,7 +85,7 @@
                 for(var role in accessLevelDeclarations[level]){
                     if(userRoles.hasOwnProperty(accessLevelDeclarations[level][role]))
                         resultBitMask = resultBitMask | userRoles[accessLevelDeclarations[level][role]].bitMask
-                    else console.log("Access Control Error: Could not find role '" + accessLevelDeclarations[level][role] + "' in registered roles while building access for '" + level + "'")
+                    else console.log(`Access Control Error: Could not find role '${accessLevelDeclarations[level][role]}' in registered roles while building access for '${level}'`)
                 }
                 accessLevels[level] = {
                     bitMask: resultBitMask
@@ -96,4 +96,4 @@
         return accessLevels;
     }
 
-})(typeof exports === 'undefined' ? this['routingConfig'] = {} : exports);
+}))(typeof exports === 'undefined' ? this['routingConfig'] = {} : exports);

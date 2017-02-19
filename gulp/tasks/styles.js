@@ -27,6 +27,7 @@ gulp.task('processScss', function() {
     .pipe(gulpif(browserSync.active, browserSync.reload({ stream: true })));
 });
 
+/*
 gulp.task('processLess', function() {
   return gulp.src(config.styles.src)
     .pipe(less({
@@ -36,6 +37,7 @@ gulp.task('processLess', function() {
     .pipe(gulp.dest(config.styles.dest))
     .pipe(gulpif(browserSync.active, browserSync.reload({ stream: true })));
 });
+*/
 
 gulp.task('concatCss', function() {
   config.styles.concat.unshift(config.styles.dest + '/app.css');

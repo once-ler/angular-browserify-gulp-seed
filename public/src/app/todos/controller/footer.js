@@ -1,5 +1,3 @@
-'use strict';
-
-module.exports = function($scope, VERSION) {
+export default ($scope, VERSION) => {
   $scope.version = VERSION;
 };

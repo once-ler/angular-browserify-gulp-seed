@@ -1,20 +1,18 @@
-'use strict';
+export default ($scope, TodoService) => {
 
-module.exports = function($scope, TodoService) {
-
-  var backupForCancel;
-  var creatingNew = false;
+  let backupForCancel;
+  let creatingNew = false;
 
   $scope.editMode = false;
 
-  $scope.create = function() {
+  $scope.create = () => {
     $scope.$parent.todo = TodoService.create();
     backupForCancel = null;
     creatingNew = true;
     $scope.editMode = true;
   };
 
-  $scope.edit = function() {
+  $scope.edit = () => {
     if ($scope.editMode) {
       return;
     }
@@ -23,7 +21,7 @@ module.exports = function($scope, TodoService) {
     $scope.editMode = true;
   };
 
-  $scope.save = function() {
+  $scope.save = () => {
     if (creatingNew) {
       TodoService.insert($scope.$parent.todo);
     }
@@ -32,7 +30,7 @@ module.exports = function($scope, TodoService) {
     backupForCancel = null;
   };
 
-  $scope.cancel = function() {
+  $scope.cancel = () => {
     if (!creatingNew) {
       // rollback edits
       $scope.$parent.todo.title = backupForCancel.title;
@@ -46,7 +44,7 @@ module.exports = function($scope, TodoService) {
     $scope.editMode = false;
   };
 
-  $scope.remove = function() {
+  $scope.remove = () => {
     TodoService.remove($scope.$parent.todo);
     // set active todo to some arbitrary todo
     $scope.$parent.todo = TodoService.getTodos()[0];

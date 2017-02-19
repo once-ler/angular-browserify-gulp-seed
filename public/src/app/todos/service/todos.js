@@ -1,8 +1,6 @@
-'use strict';
+export default function() {
 
-module.exports = function() {
-
-  var todos = [{
+  let todos = [{
     title: 'Buy milk',
     due: createDate(0, 0, 0, 18, 0),
     text: 'We are out of milk and coffee without milk is just unbearable.',
@@ -22,28 +20,24 @@ module.exports = function() {
     text: 'Because, who wouldn\'t want that?',
   }];
 
-  this.getTodos = function() {
-    return todos;
-  };
+  this.getTodos = () => todos;
 
-  this.create = function() {
-    return {
-      title: '',
-      due: createDate(0, 0, 1, 12, 0),
-      text: '',
-    };
-  };
+  this.create = () => ({
+    title: '',
+    due: createDate(0, 0, 1, 12, 0),
+    text: ''
+  });
 
-  this.insert = function(todo) {
+  this.insert = todo => {
     todos.push(todo);
   };
 
-  this.remove = function(todo) {
-    todos = todos.filter(function(t) { return t !== todo; });
+  this.remove = todo => {
+    todos = todos.filter(t => t !== todo);
   };
 
   function createDate(year, month, day, hour, minute) {
-    var now = new Date();
+    const now = new Date();
     return new Date(
       now.getFullYear() + year,
       now.getMonth() + month,

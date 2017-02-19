@@ -1,28 +1,22 @@
-'use strict';
-
 // require external bower-managed angular libraries
 require('angular');
 require('angular-ui-router');
-
-//require material
 require('angular-material-design-lite');
 
-var templates = require('./templates');
-var directives = require('./directives');
-var controllers = require('./controllers');
-var services = require('./services');
-
-var httpInterceptorModule = require('./httpInterceptor');
-var homeModule = require('./home');
-var testModule = require('./hello');
-var todosModule = require('./todos');
-var authModule = require('./auth');
-var loginModule = require('./login');
+import templates from './templates';
+import directives from './directives';
+import controllers from './controllers';
+import services from './services';
+import httpInterceptorModule from './httpInterceptor';
+import homeModule from './home';
+import testModule from './hello';
+import todosModule from './todos';
+import authModule from './auth';
+import loginModule from './login';
 
 // create and bootstrap application
-angular.element(document).ready(function() {
-
-  var requires = [
+angular.element(document).ready(() => {
+  const requires = [
     'ui.router',
     'mdl',
     templates.name,
@@ -40,12 +34,9 @@ angular.element(document).ready(function() {
   // mount on window for testing
   window.app = angular.module('app', requires);
 
-  //angular.module('app').constant('AppSettings', require('./constants'));
-
   angular.module('app').config(require('./routes')); //defaults for ui-router
 
   angular.module('app').run(require('./on_run'));
 
   angular.bootstrap(document, ['app']);
-
 });

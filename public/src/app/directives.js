@@ -1,24 +1,28 @@
-'use strict';
+const app = angular.module('app.directives', []);
 
-var app = angular.module('app.directives', []);
-  
-var homeHeader = function () {
-  return {
-    restrict: 'A', //This menas that it will be used as an attribute and NOT as an element. I don't like creating custom HTML elements
-    replace: true,
-    scope: false, //scope is not inherited, scope is same as parent 
-    templateUrl: "partials/header.html"
-  };
-};
+const homeHeader = () => ({
+  //This menas that it will be used as an attribute and NOT as an element. I don't like creating custom HTML elements
+  restrict: 'A',
 
-var homeNav = function () {
-  return {
-    restrict: 'A', //This menas that it will be used as an attribute and NOT as an element. I don't like creating custom HTML elements
-    replace: true,
-    scope: false, //scope is not inherited, scope is same as parent 
-    templateUrl: "partials/nav.html"
-  };
-};
+  replace: true,
+
+  //scope is not inherited, scope is same as parent 
+  scope: false,
+
+  templateUrl: "partials/header.html"
+});
+
+const homeNav = () => ({
+  //This menas that it will be used as an attribute and NOT as an element. I don't like creating custom HTML elements
+  restrict: 'A',
+
+  replace: true,
+
+  //scope is not inherited, scope is same as parent 
+  scope: false,
+
+  templateUrl: "partials/nav.html"
+});
 
 app.directive('homeHeader', homeHeader);
 app.directive('homeNav',  homeNav)
@@ -26,47 +30,45 @@ app.directive('homeNav',  homeNav)
 /**
   Add directives for ajax loading effects
 **/
-app.directive('loadingWidget', function (requestNotificationChannel) {
-  return {
-    restrict: "A",
-    link: function (scope, element) {
-      
-      //Add one time
-      element.addClass('loading');
+app.directive('loadingWidget', requestNotificationChannel => ({
+  restrict: "A",
 
-      // hide the element initially
+  link(scope, element) {
+    
+    //Add one time
+    element.addClass('loading');
+
+    // hide the element initially
+    element.removeClass('loaded');
+
+    const startRequestHandler = () => {
+      // got the request start notification, show the element
       element.removeClass('loaded');
+    };
 
-      var startRequestHandler = function() {
-        // got the request start notification, show the element
-        element.removeClass('loaded');
-      };
+    const endRequestHandler = () => {
+      // got the request start notification, show the element
+      element.addClass('loaded');
+    };
 
-      var endRequestHandler = function() {
-        // got the request start notification, show the element
-        element.addClass('loaded');
-      };
+    requestNotificationChannel.onRequestStarted(scope, startRequestHandler);
 
-      requestNotificationChannel.onRequestStarted(scope, startRequestHandler);
+    requestNotificationChannel.onRequestEnded(scope, endRequestHandler);
+  }
+}));
 
-      requestNotificationChannel.onRequestEnded(scope, endRequestHandler);
-    }
-  };
-});
+app.directive('loadingContainer', () => ({
+  restrict: 'A',
+  scope: false,
 
-app.directive('loadingContainer', function() {
-  return {
-    restrict: 'A',
-    scope: false,
-    link: function(scope, element, attrs) {
-      var loadingLayer = angular.element('<div class="loading"></div>');
-      element.append(loadingLayer);
-      element.addClass('loading-container');
-      scope.$watch(attrs.loadingContainer, function(value) {
-        loadingLayer.toggleClass('ng-hide', !value);
-      });
-    }
-  };
-});
+  link(scope, element, attrs) {
+    const loadingLayer = angular.element('<div class="loading"></div>');
+    element.append(loadingLayer);
+    element.addClass('loading-container');
+    scope.$watch(attrs.loadingContainer, value => {
+      loadingLayer.toggleClass('ng-hide', !value);
+    });
+  }
+}));
 
-module.exports = app;
+export default app;

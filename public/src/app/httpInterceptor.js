@@ -1,69 +1,68 @@
-'use strict';
-
 /**
 http://codingsmackdown.tv/blog/2013/04/20/using-response-interceptors-to-show-and-hide-a-loading-widget-redux/
 **/
 
-var app = angular.module('app.http.interceptor', []);
+const app = angular.module('app.http.interceptor', []);
 
-app.config(['$httpProvider', function($httpProvider) {
-  var $http,
-    interceptor = ['$q', '$injector', function($q, $injector) {
-      var notificationChannel;
+app.config(['$httpProvider', $httpProvider => {
+  let $http;
 
-      function success(response) {
-        // get $http via $injector because of circular dependency problem
-        $http = $http || $injector.get('$http');
-        // don't send notification until all requests are complete
-        if ($http.pendingRequests.length < 1) {
-          // get requestNotificationChannel via $injector because of circular dependency problem
-          notificationChannel = notificationChannel || $injector.get('requestNotificationChannel');
-          // send a notification requests are complete
-          notificationChannel.requestEnded();
-        }
-        return response;
-      }
+  const interceptor = ['$q', '$injector', ($q, $injector) => {
+    let notificationChannel;
 
-      function error(response) {
-        // get $http via $injector because of circular dependency problem
-        $http = $http || $injector.get('$http');
-        // don't send notification until all requests are complete
-        if ($http.pendingRequests.length < 1) {
-          // get requestNotificationChannel via $injector because of circular dependency problem
-          notificationChannel = notificationChannel || $injector.get('requestNotificationChannel');
-          // send a notification requests are complete
-          notificationChannel.requestEnded();
-        }
-        return $q.reject(response);
-      }
-
-      //return function(promise) {
-      function notUsed(promise) {
-
+    function success(response) {
+      // get $http via $injector because of circular dependency problem
+      $http = $http || $injector.get('$http');
+      // don't send notification until all requests are complete
+      if ($http.pendingRequests.length < 1) {
         // get requestNotificationChannel via $injector because of circular dependency problem
         notificationChannel = notificationChannel || $injector.get('requestNotificationChannel');
         // send a notification requests are complete
-        notificationChannel.requestStarted();
-        return promise.then(success, error);
+        notificationChannel.requestEnded();
       }
+      return response;
+    }
 
-      function request(config){
+    function error(response) {
+      // get $http via $injector because of circular dependency problem
+      $http = $http || $injector.get('$http');
+      // don't send notification until all requests are complete
+      if ($http.pendingRequests.length < 1) {
         // get requestNotificationChannel via $injector because of circular dependency problem
         notificationChannel = notificationChannel || $injector.get('requestNotificationChannel');
         // send a notification requests are complete
-        notificationChannel.requestStarted();
-
-        return config;
+        notificationChannel.requestEnded();
       }
+      return $q.reject(response);
+    }
 
-      //>=1.3
-      return {
-        "requestError": error,
-        "request": request,
-        "response": success
-      };
+    //return function(promise) {
+    function notUsed(promise) {
 
-    }];
+      // get requestNotificationChannel via $injector because of circular dependency problem
+      notificationChannel = notificationChannel || $injector.get('requestNotificationChannel');
+      // send a notification requests are complete
+      notificationChannel.requestStarted();
+      return promise.then(success, error);
+    }
+
+    function request(config){
+      // get requestNotificationChannel via $injector because of circular dependency problem
+      notificationChannel = notificationChannel || $injector.get('requestNotificationChannel');
+      // send a notification requests are complete
+      notificationChannel.requestStarted();
+
+      return config;
+    }
+
+    //>=1.3
+    return {
+      "requestError": error,
+      "request": request,
+      "response": success
+    };
+
+  }];
 
   //~1.2
   //$httpProvider.responseInterceptors.push(interceptor);
@@ -71,38 +70,38 @@ app.config(['$httpProvider', function($httpProvider) {
   $httpProvider.interceptors.push(interceptor);
 }]);
 
-app.factory('requestNotificationChannel', ['$rootScope', function($rootScope) {
+app.factory('requestNotificationChannel', ['$rootScope', $rootScope => {
   // private notification messages
-  var _START_REQUEST_ = '_START_REQUEST_';
-  var _END_REQUEST_ = '_END_REQUEST_';
+  const _START_REQUEST_ = '_START_REQUEST_';
+  const _END_REQUEST_ = '_END_REQUEST_';
 
   // publish start request notification
-  var requestStarted = function() {
+  const requestStarted = () => {
     $rootScope.$broadcast(_START_REQUEST_);
   };
   // publish end request notification
-  var requestEnded = function() {
+  const requestEnded = () => {
     $rootScope.$broadcast(_END_REQUEST_);
   };
   // subscribe to start request notification
-  var onRequestStarted = function($scope, handler) {
-    $scope.$on(_START_REQUEST_, function(event) {
+  const onRequestStarted = ($scope, handler) => {
+    $scope.$on(_START_REQUEST_, event => {
       handler();
     });
   };
   // subscribe to end request notification
-  var onRequestEnded = function($scope, handler) {
-    $scope.$on(_END_REQUEST_, function(event) {
+  const onRequestEnded = ($scope, handler) => {
+    $scope.$on(_END_REQUEST_, event => {
       handler();
     });
   };
 
   return {
-    requestStarted: requestStarted,
-    requestEnded: requestEnded,
-    onRequestStarted: onRequestStarted,
-    onRequestEnded: onRequestEnded
+    requestStarted,
+    requestEnded,
+    onRequestStarted,
+    onRequestEnded
   };
 }]);
 
-module.exports = app;
+export default app;

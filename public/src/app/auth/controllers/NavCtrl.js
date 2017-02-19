@@ -1,23 +1,21 @@
-'use strict';
-
-module.exports = function($rootScope, $scope, $location, Auth) {
+export default ($rootScope, $scope, $location, Auth) => {
   $scope.user = Auth.user;
   $scope.userRoles = Auth.userRoles;
   $scope.accessLevels = Auth.accessLevels;
 
-  $scope.close = function() {
+  $scope.close = () => {
     $rootScope.error = null;
   };
 
-  $scope.logout = function() {
-    Auth.logout(function() {
+  $scope.logout = () => {
+    Auth.logout(() => {
       $location.path('/login');
-    }, function() {
+    }, () => {
       $rootScope.error = "Failed to logout";
     });
   };
 
-  $scope.menuToggle = function() {
+  $scope.menuToggle = () => {
     $("#wrapper").toggleClass("active");
   };
-}
+};

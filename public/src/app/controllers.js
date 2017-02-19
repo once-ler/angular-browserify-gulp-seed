@@ -1,21 +1,19 @@
-'use strict';
+const app = angular.module('app.controllers', ['app.auth']);
 
-var app = angular.module('app.controllers', ['app.auth']);
- 
-var navCtrl = function($rootScope, $scope, $location, $timeout, Auth) {
+const navCtrl = ($rootScope, $scope, $location, $timeout, Auth) => {
   $scope.user = Auth.user;
   $scope.userRoles = Auth.userRoles;
   $scope.accessLevels = Auth.accessLevels;
 
-  $scope.logout = function() {
-    Auth.logout(function() {
+  $scope.logout = () => {
+    Auth.logout(() => {
       $location.path('/login');
-    }, function() {
-      $timeout(function() { $rootScope.error = "Failed to logout"; }, 0);
+    }, () => {
+      $timeout(() => { $rootScope.error = "Failed to logout"; }, 0);
     });
   };
 };
 
 app.controller('NavCtrl', navCtrl);
 
-module.exports = app;
+export default app;

@@ -1,14 +1,10 @@
-'use strict';
+import fs from 'fs';
 
-var fs = require('fs');
+export default function() {
 
-module.exports = function() {
-
-  var text = 'Example app for using AngularJS with Browserify - ' +
+  const text = 'Example app for using AngularJS with Browserify - ' +
     'by Bastian Krol. Use at your own risk :P';
 
-  this.getText = function() {
-    return text;
-  };
+  this.getText = () => text;
 
 };

@@ -1,5 +1,3 @@
-'use strict';
-
-module.exports = function($scope, ImprintService) {
+export default ($scope, ImprintService) => {
   $scope.text = ImprintService.getText();
 };

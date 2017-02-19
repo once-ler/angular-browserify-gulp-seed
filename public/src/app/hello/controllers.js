@@ -1,12 +1,10 @@
-'use strict';
-
 require('angular');
 
 // define controllers ng-module and export it
-var controllers = module.exports = angular.module('app.hello.controllers', []);
+const controllers = module.exports = angular.module('app.hello.controllers', []);
 
 // define MyApp.controllers.HomeController
-controllers.controller('HelloController', function ($scope) {
+controllers.controller('HelloController', $scope => {
 
   // A sample controller implementation to show greetings randomly from a list
   $scope.greetings = [

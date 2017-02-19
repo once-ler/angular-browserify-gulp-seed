@@ -1,4 +1,4 @@
-module.exports = angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("partials/404.html","<h1>404</h1>\r\n<p>Oops! Ain\'t nothing here.</p>");
+export default angular.module("templates", []).run(["$templateCache", $templateCache => {$templateCache.put("partials/404.html","<h1>404</h1>\r\n<p>Oops! Ain\'t nothing here.</p>");
 $templateCache.put("partials/header.html","<div class=\"navbar navbar-inverse navbar-fixed-top carbon\">\r\n  <div class=\"navbar-inner\">\r\n   <div class=\"container\" style=\"margin-top:0;padding-left:0;\">\r\n      <a class=\"brand\" href=\"#\"><img src=\"/img/favicons/mfny2.jpeg\" ></a>\r\n   </div>\r\n </div>\r\n</div>");
 $templateCache.put("partials/hello/home.html","<h1>Hello World! <span ng-if=\"greetings\">{{ greetings }}</span></h1>\n<p>Refresh page to see <code>MyApp.controllers.HomeController</code> in action!</p>\n<h1>Login</h1>\n<p><a href=\"/login/\" class=\"btn btn-primary btn-lg\">Login</a></p>\n\n");
 $templateCache.put("partials/home/body.html","<h1>This is the home body</h1>");

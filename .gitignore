@@ -9,3 +9,7 @@ public/dist/
 public/images/
 .idea/
 npm-debug.log
+scripts/
+public/img/*.jpg
+public/favicons/*
+public/less/

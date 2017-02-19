@@ -1,5 +1,3 @@
-'use strict';
-
 //require('es5-shim');
 //require('es5-sham');
 
@@ -8,18 +6,21 @@ require('angular');
 require('angular-ui-router')
 
 //Dependents
-var routingConfig = require('../routingConfig');
-var access = routingConfig.accessLevels;
-//var env = require('../env');
-var services = require('./service');
-var controllers = require('./controller');
+import routingConfig from '../routingConfig';
 
-var app = angular.module('app.todos', [ 'ui.router', services.name, controllers.name ]);
+const access = routingConfig.accessLevels;
+
+//var env = require('../env');
+import services from './service';
+
+import controllers from './controller';
+
+const app = angular.module('app.todos', [ 'ui.router', services.name, controllers.name ]);
 
 //app.constant('VERSION', require('../../package.json').version);
 
 //app.config(function($routeProvider) {
-app.config(function ($stateProvider, $urlRouterProvider) {
+app.config(($stateProvider, $urlRouterProvider) => {
 
   $stateProvider
     .state('todos', {
@@ -41,4 +42,4 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     });
 });
 
-module.exports = app;
+export default app;
